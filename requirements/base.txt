@@ -1,0 +1,4 @@
+Markdown>=2.4.1
+bcrypt>=1.0.2
+psycopg2>=2.5.3
+Pillow>=2.8.1
