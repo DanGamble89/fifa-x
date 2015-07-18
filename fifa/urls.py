@@ -13,7 +13,9 @@ urlpatterns = patterns(
         name='homepage'
     ),
     url(r'^admin/', include(admin.site.urls)),
-    # url(r'^/app/', include('apps.app.urls', namespace='app')),
+
+    # Nations
+    url(r'^/nations/', include('fifa.apps.nations.urls', namespace='nations')),
 )
 
 if settings.DEBUG:
