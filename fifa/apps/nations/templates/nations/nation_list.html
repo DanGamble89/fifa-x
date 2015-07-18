@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block primary_content %}
+  {% for nation in object_list %}
+    <a href="{% url 'nations:nation_detail' nation.slug %}">{{ nation }}</a>
+  {% endfor %}
+{% endblock %}
