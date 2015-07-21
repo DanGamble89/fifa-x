@@ -24,6 +24,7 @@ export default {
   html: {
     path: templateFolder,
     src: [
+      'fifa/apps/**/*.html',
       `${templateFolder}/*.html`,
       `${templateFolder}/**/*.html`
     ]

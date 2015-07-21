@@ -1,7 +1,31 @@
 {% extends 'base.html' %}
 
 {% block primary_content %}
-  {% for nation in object_list %}
-    <a href="{% url 'nations:nation_detail' nation.slug %}">{{ nation }}</a>
-  {% endfor %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Name abbreviated</th>
+        <th>Slug</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for nation in object_list %}
+        <tr>
+          <th>
+            <a href="{% url 'nations:nation_detail' nation.slug %}">{{ nation }}</a>
+          </th>
+
+          <th>
+            <span>{{ nation.name_abbr }}</span>
+          </th>
+
+          <th>
+            <span>{{ nation.slug }}</span>
+          </th>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}
