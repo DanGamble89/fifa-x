@@ -106,7 +106,19 @@ INSTALLED_APPS = (
 
     'django.contrib.admin',
 
+    'fifa.apps.blog',
+    'fifa.apps.builder',
+    'fifa.apps.clubs',
+    'fifa.apps.forum',
+    'fifa.apps.guides',
+    'fifa.apps.items',
+    'fifa.apps.leagues',
     'fifa.apps.nations',
+    'fifa.apps.packs',
+    'fifa.apps.players',
+    'fifa.apps.prices',
+    'fifa.apps.ranked',
+    'fifa.apps.squads',
     'fifa.apps.users',
 )
 
