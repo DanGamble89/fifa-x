@@ -14,11 +14,6 @@ class League(TimeStampedModel, EaModel):
 
     image_medium = models.CharField(max_length=500)
 
-    image_dark_small = models.CharField(max_length=500)
-    image_dark_large = models.CharField(max_length=500)
-    image_light_small = models.CharField(max_length=500)
-    image_light_large = models.CharField(max_length=500)
-
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
