@@ -10,7 +10,7 @@ class League(TimeStampedModel, EaModel):
 
     slug = models.SlugField(unique=True)
 
-    nation = models.ForeignKey(Nation)
+    nation = models.ForeignKey(Nation, blank=True, null=True)
 
     image_medium = models.CharField(max_length=500)
 
