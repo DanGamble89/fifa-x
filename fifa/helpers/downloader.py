@@ -1,4 +1,5 @@
 from django.utils.text import slugify
+from fifa.apps.leagues.models import League
 
 from fifa.apps.nations.models import Nation
 
@@ -9,6 +10,7 @@ class Downloader(object):
     def __init__(self):
         self.base_url = 'https://www.easports.com/uk/fifa/ultimate-team/api/fut/item'
         self.leagues_json = 'https://fifa15.content.easports.com/fifa/fltOnlineAssets/8D941B48-51BB-4B87-960A-06A61A62EBC0/2015/fut/items/web/leagues.json'
+        self.clubs_json = 'https://fifa15.content.easports.com/fifa/fltOnlineAssets/8D941B48-51BB-4B87-960A-06A61A62EBC0/2015/fut/items/web/teams.json'
 
     def get_total_pages(self):
         page = requests.get(self.base_url)
@@ -85,6 +87,7 @@ class Downloader(object):
         urls = kwargs.get('failed', self.get_crawlable_urls())
         leagues = kwargs.get('data', [])
         failed_urls = []
+        leagues_data = {}
 
         league_page = requests.get(self.leagues_json)
 
@@ -114,13 +117,27 @@ class Downloader(object):
                         }
 
                         for data in leagues_data:
-                            if data['LeagueId'] == leagues_data['ea_id']:
+                            league_id = int(data['LeagueId'])
+                            scraped_id = int(league_data['ea_id'])
+                            nation_id = int(data['NationId'])
+
+                            if league_id == scraped_id:
                                 league_data['nation'] = Nation.objects.get(
-                                    ea_id=data['NationId']
+                                    ea_id=nation_id
                                 )
 
-                        if league_data not in leagues:
-                            leagues.append(league_data)
+                                print(
+                                    'Paired League & Nation: {} - {}'.format(
+                                        league_data['name'],
+                                        league_data['nation']
+                                    ))
+
+                                if league_data not in leagues:
+                                    leagues.append(league_data)
+                            else:
+                                print("Can't find Nation for {}".format(
+                                    league_data['name']
+                                ))
 
                 except ValueError:
                     failed_urls.append(url)
@@ -131,7 +148,7 @@ class Downloader(object):
 
                 print('Url failed: {}'.format(url))
 
-            print([n['name'] for n in leagues])
+            print([n['name'] for n in leagues], 'Page {}'.format(i))
 
         if failed_urls:
             self.build_league_data(failed=failed_urls, data=leagues)
@@ -148,8 +165,26 @@ class Downloader(object):
             if created:
                 created_nations.append(created)
 
-                print('Created Nation: {}'.format(nation))
+                print('Created League: {}'.format(nation))
 
         print(len(created_nations))
 
         return
+
+    def build_leagues(self, *args, **kwargs):
+        data = self.build_league_data()
+        created_leagues = []
+
+        for obj in data:
+            league, created = League.objects.get_or_create(**obj)
+
+            if created:
+                created_leagues.append(created)
+
+                print('Created Nation: {}'.format(league))
+
+        print(len(created_leagues))
+
+        return
+
+
