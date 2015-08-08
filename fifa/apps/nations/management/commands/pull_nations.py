@@ -7,4 +7,4 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         downloader = Downloader()
 
-        downloader.build_league_data()
+        downloader.build_nations()
