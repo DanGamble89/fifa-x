@@ -1,0 +1,23 @@
+- model: nations.nation
+  pk: 1
+  fields:
+    ea_id: 75
+    name: International
+    name_abbr: International
+    slug: international
+
+- model: nations.nation
+  pk: 2
+  fields:
+    ea_id: 211
+    name: Legends
+    name_abbr: Legends
+    slug: legends
+
+- model: nations.nation
+  pk: 3
+  fields:
+    ea_id: 221
+    name: IceBreaker
+    name_abbr: IceBreaker
+    slug: icebreaker
