@@ -1,4 +1,5 @@
 from datetime import date
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 from ..clubs.models import Club
@@ -85,8 +86,8 @@ class Player(TimeStampedModel, EaModel):
     agility = models.PositiveIntegerField()
     balance = models.PositiveIntegerField()
     ball_control = models.PositiveIntegerField()
-    foot = models.PositiveIntegerField()
     skill = models.PositiveIntegerField()
+    weak_foot = models.PositiveIntegerField()
     crossing = models.PositiveIntegerField()
     curve = models.PositiveIntegerField()
     dribbling = models.PositiveIntegerField()
@@ -116,11 +117,11 @@ class Player(TimeStampedModel, EaModel):
     strength = models.PositiveIntegerField()
     vision = models.PositiveIntegerField()
     volleys = models.PositiveIntegerField()
-    weak_foot = models.PositiveIntegerField()
+    preferred_foot = models.CharField(max_length=255)
 
     # Descriptions
-    traits = models.CharField(max_length=500, null=True)
-    specialities = models.CharField(max_length=500, null=True)
+    traits = ArrayField(models.CharField(max_length=255, blank=True, null=True), blank=True, null=True)
+    specialities = ArrayField(models.CharField(max_length=255, blank=True, null=True), blank=True, null=True)
 
     # Workrates
     workrate_att = models.CharField(max_length=10, choices=PLAYER_WORKRATE_CHOICES)
@@ -146,6 +147,7 @@ class Player(TimeStampedModel, EaModel):
 
     is_goalkeeper = models.BooleanField(default=False)
     is_special_type = models.BooleanField(default=False)
+    is_fut_player = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('order', 'overall_rating', 'common_name', 'pk')

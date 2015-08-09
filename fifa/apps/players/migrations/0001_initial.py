@@ -2,21 +2,22 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import django.contrib.postgres.fields
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('leagues', '0003_auto_20150808_1621'),
-        ('clubs', '0001_initial'),
         ('nations', '0002_auto_20150804_2245'),
+        ('clubs', '0001_initial'),
+        ('leagues', '0003_auto_20150808_1621'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='Player',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, serialize=False, primary_key=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('modified', models.DateTimeField(auto_now=True)),
                 ('ea_id', models.PositiveIntegerField()),
@@ -29,8 +30,8 @@ class Migration(migrations.Migration):
                 ('image_small', models.CharField(max_length=500)),
                 ('image_medium', models.CharField(max_length=500)),
                 ('image_large', models.CharField(max_length=500)),
-                ('position', models.CharField(max_length=3, choices=[('gk', 'GK'), ('rwb', 'RWB'), ('rb', 'RB'), ('cb', 'CB'), ('lb', 'LB'), ('lwb', 'LWB'), ('cdm', 'CDM'), ('cm', 'CM'), ('cam', 'CAM'), ('rm', 'RM'), ('rw', 'RW'), ('rf', 'RF'), ('lm', 'LM'), ('lw', 'LW'), ('lf', 'LF'), ('cf', 'CF'), ('st', 'ST')])),
-                ('position_line', models.CharField(max_length=3, choices=[('gk', 'GK'), ('def', 'DEF'), ('mid', 'MID'), ('att', 'ATT')])),
+                ('position', models.CharField(choices=[('gk', 'GK'), ('rwb', 'RWB'), ('rb', 'RB'), ('cb', 'CB'), ('lb', 'LB'), ('lwb', 'LWB'), ('cdm', 'CDM'), ('cm', 'CM'), ('cam', 'CAM'), ('rm', 'RM'), ('rw', 'RW'), ('rf', 'RF'), ('lm', 'LM'), ('lw', 'LW'), ('lf', 'LF'), ('cf', 'CF'), ('st', 'ST')], max_length=3)),
+                ('position_line', models.CharField(choices=[('gk', 'GK'), ('def', 'DEF'), ('mid', 'MID'), ('att', 'ATT')], max_length=3)),
                 ('position_full', models.CharField(max_length=3)),
                 ('birthdate', models.DateField()),
                 ('height', models.PositiveIntegerField()),
@@ -40,8 +41,8 @@ class Migration(migrations.Migration):
                 ('agility', models.PositiveIntegerField()),
                 ('balance', models.PositiveIntegerField()),
                 ('ball_control', models.PositiveIntegerField()),
-                ('foot', models.PositiveIntegerField()),
                 ('skill', models.PositiveIntegerField()),
+                ('weak_foot', models.PositiveIntegerField()),
                 ('crossing', models.PositiveIntegerField()),
                 ('curve', models.PositiveIntegerField()),
                 ('dribbling', models.PositiveIntegerField()),
@@ -71,11 +72,11 @@ class Migration(migrations.Migration):
                 ('strength', models.PositiveIntegerField()),
                 ('vision', models.PositiveIntegerField()),
                 ('volleys', models.PositiveIntegerField()),
-                ('weak_foot', models.PositiveIntegerField()),
-                ('traits', models.CharField(max_length=500, null=True)),
-                ('specialities', models.CharField(max_length=500, null=True)),
-                ('workrate_att', models.CharField(max_length=10, choices=[('low', 'Low'), ('medium', 'Medium'), ('high', 'High')])),
-                ('workrate_def', models.CharField(max_length=10, choices=[('low', 'Low'), ('medium', 'Medium'), ('high', 'High')])),
+                ('preferred_foot', models.CharField(max_length=255)),
+                ('traits', django.contrib.postgres.fields.ArrayField(size=None, base_field=models.CharField(blank=True, max_length=255, null=True), null=True)),
+                ('specialities', django.contrib.postgres.fields.ArrayField(size=None, base_field=models.CharField(blank=True, max_length=255, null=True), null=True)),
+                ('workrate_att', models.CharField(choices=[('low', 'Low'), ('medium', 'Medium'), ('high', 'High')], max_length=10)),
+                ('workrate_def', models.CharField(choices=[('low', 'Low'), ('medium', 'Medium'), ('high', 'High')], max_length=10)),
                 ('card_att_1', models.PositiveIntegerField()),
                 ('card_att_2', models.PositiveIntegerField()),
                 ('card_att_3', models.PositiveIntegerField()),
@@ -91,13 +92,14 @@ class Migration(migrations.Migration):
                 ('color', models.CharField(max_length=255)),
                 ('is_goalkeeper', models.BooleanField(default=False)),
                 ('is_special_type', models.BooleanField(default=False)),
+                ('is_fut_player', models.BooleanField(default=False)),
                 ('club', models.ForeignKey(to='clubs.Club')),
                 ('league', models.ForeignKey(to='leagues.League')),
                 ('nation', models.ForeignKey(to='nations.Nation')),
             ],
             options={
-                'verbose_name_plural': 'Players',
                 'verbose_name': 'Player',
+                'verbose_name_plural': 'Players',
                 'ordering': ('order', 'overall_rating', 'common_name', 'pk'),
             },
         ),
