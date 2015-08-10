@@ -120,8 +120,8 @@ class Player(TimeStampedModel, EaModel):
     preferred_foot = models.CharField(max_length=255)
 
     # Descriptions
-    traits = ArrayField(models.CharField(max_length=255, blank=True, null=True), blank=True, null=True)
-    specialities = ArrayField(models.CharField(max_length=255, blank=True, null=True), blank=True, null=True)
+    traits = ArrayField(models.TextField(max_length=255, blank=True, null=True), blank=True, null=True)
+    specialities = ArrayField(models.TextField(max_length=255, blank=True, null=True), blank=True, null=True)
 
     # Workrates
     workrate_att = models.CharField(max_length=10, choices=PLAYER_WORKRATE_CHOICES)
