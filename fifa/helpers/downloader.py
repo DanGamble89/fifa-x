@@ -346,17 +346,8 @@ class PlayerDownloader(Downloader):
                             if player['position'] in PLAYER_POSITION_LINES[k]:
                                 position_line = k
 
-                        if player['traits']:
-                            for trait in player['traits']:
-                                print(type(trait))
-
-                        if player['specialities']:
-                            for specialalitie in player['specialities']:
-                                print(type(specialalitie))
-
                         player_data = {
                             'ea_id': player['baseId'],
-                            'slug': slugify(player['name']),
                             'name': player['name'],
                             'first_name': player['firstName'],
                             'last_name': player['lastName'],
@@ -435,18 +426,14 @@ class PlayerDownloader(Downloader):
                             for data in players_data_normal:
                                 if data['id'] == player_data['ea_id']:
                                     player_data['is_fut_player'] = True
-
-                                    break
-
-                                player_data['is_fut_player'] = False
+                                else:
+                                    player_data['is_fut_player'] = False
                         else:
                             for data in players_data_legends:
                                 if data['id'] == player_data['ea_id']:
                                     player_data['is_fut_player'] = True
-
-                                    break
-
-                                player_data['is_fut_player'] = False
+                                else:
+                                    player_data['is_fut_player'] = False
 
                         if player_data not in players:
                             players.append(player_data)
@@ -460,8 +447,6 @@ class PlayerDownloader(Downloader):
 
                 print('Url failed: {}'.format(url))
 
-            break
-
             print([(n['common_name'], n['is_fut_player']) for n in players], 'Page {}'.format(i))
 
         if failed_urls:
@@ -474,14 +459,13 @@ class PlayerDownloader(Downloader):
         created_players = []
 
         for obj in data:
-            try:
-                player = Player.objects.get(**obj)
-            except Player.DoesNotExist:
-                player = Player.objects.create(**obj)
+            player, created = Player.objects.get_or_create(**obj)
 
-            created_players.append(player)
+            if created:
+                player.slug = slugify('{}-{}'.format(player.id, player.common_name))
+                created_players.append(created)
 
-            print('Created Player: {}'.format(player))
+                print('Created Player: {}'.format(player))
 
         print(len(created_players))
 
