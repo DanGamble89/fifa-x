@@ -57,7 +57,7 @@ class Player(TimeStampedModel, EaModel):
     common_name = models.CharField(max_length=255)
 
     # Django's
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, blank=True, null=True)
     order = models.PositiveIntegerField(default=0)
 
     # Relations
