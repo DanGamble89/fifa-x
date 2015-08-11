@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block primary_content %}
-  {% for player in players %}
-    {{ player }}
-  {% endfor %}
+  <ul>
+    {% for player in players %}
+      <li>
+        <a href="{{ url('players:player', kwargs={'slug': player.slug}) }}">{{ player }}</a>
+      </li>
+    {% endfor %}
+  </ul>
 {% endblock %}
