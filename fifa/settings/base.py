@@ -49,6 +49,16 @@ SECRET_KEY = r"ur97rr4qrrv&fz7egjn7vx#ohgb-r6thho%qn#v#t!@fez507u"
 
 TEMPLATES = [
     {
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'DIRS': [
+            os.path.join(BASE_DIR, 'jinja'),
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'environment': 'fifa.jinja2.environment',
+        }
+    },
+    {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(SITE_ROOT, 'templates')
