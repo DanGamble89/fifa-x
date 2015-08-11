@@ -150,7 +150,7 @@ class Player(TimeStampedModel, EaModel):
     is_fut_player = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ('order', 'overall_rating', 'common_name', 'pk')
+        ordering = ('order', '-overall_rating', 'common_name', 'pk')
         verbose_name = 'Player'
         verbose_name_plural = 'Players'
 
