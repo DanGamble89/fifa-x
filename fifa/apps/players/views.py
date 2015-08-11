@@ -1,12 +1,75 @@
+from django.core.urlresolvers import reverse
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import FormMixin, BaseFormView
 
+from .forms import PlayersFilterForm
 from .models import Player
 
+import urllib.parse
 
-class PlayerList(ListView):
+
+def build_url(*args, **kwargs):
+    request = kwargs.pop('request', {})
+    get = kwargs.pop('get', {})
+    url = reverse(*args, **kwargs)
+
+    if hasattr(request, 'dict'):
+        for k, v in request.dict().items():
+            if '?' not in url:
+                url += '?{}={}'.format(k, v)
+            else:
+                url += '&{}={}'.format(k, v)
+
+        for k, v in get.items():
+            if '{}={}'.format(k, v) not in url:
+                if '?' not in url:
+                    url += '?{}={}'.format(k, v)
+                else:
+                    url += '&{}={}'.format(k, v)
+
+    return url
+
+
+class PlayerList(ListView, FormMixin):
     context_object_name = 'players'
+    form_class = PlayersFilterForm
     model = Player
     paginate_by = 50
+
+    def get_context_data(self, **kwargs):
+        context = super(PlayerList, self).get_context_data()
+
+        if self.request.GET:
+            context['form'] = PlayersFilterForm(self.request.GET)
+        else:
+            context['form'] = PlayersFilterForm()
+
+        # print(build_url('players:list', get={'nation': '167'}))
+
+        context['current_url'] = self.request.get_full_path()
+
+        return context
+
+    def get_queryset(self, **kwargs):
+        qs = super(PlayerList, self).get_queryset().prefetch_related(
+            'club',
+            'league',
+            'nation'
+        )
+
+        arguments = {}
+
+        for k, v in self.request.GET.dict().items():
+            if k == 'csrfmiddlewaretoken':
+                pass
+            elif v:
+                arguments[k] = v
+
+        qs = qs.filter(
+            **arguments
+        )
+
+        return qs
 
 
 class PlayerDetail(DetailView):

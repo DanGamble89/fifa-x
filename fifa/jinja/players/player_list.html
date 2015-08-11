@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block primary_content %}
-  <form action="{{ url('players:list') }}" method="post">
+  <form action="{{ url('players:list') }}" method="get">
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 
     {{ form.as_p() }}
@@ -12,7 +12,15 @@
   <ul>
     {% for player in players %}
       <li>
-        <a href="{{ url('players:player', kwargs={'slug': player.slug}) }}">{{ player }}</a>
+        <a href="{{ url('players:player', kwargs={'slug': player.slug}) }}">{{ player }} - {{ current_url }}</a>
+
+        <ul>
+          {# Potentially poor way to do it #}
+          <li><a href="{{ current_url }}?nation={{ player.nation.id }}">{{ player.nation }}</a></li>
+
+          {# Probably a better more verbose way to do it #}
+          <li>{{ build_url('players:list', request=request.GET, get={'nation': player.nation.id}) }}</li>
+        </ul>
       </li>
     {% endfor %}
   </ul>
