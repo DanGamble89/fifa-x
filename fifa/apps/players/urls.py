@@ -4,6 +4,6 @@ from .views import PlayerList, PlayerDetail
 
 urlpatterns = patterns(
     '',
-    url(r'^$', PlayerList.as_view(), name="player_list"),
-    url(r'^(?P<slug>[\w-]+)/$', PlayerDetail.as_view(), name='player_detail'),
+    url(r'^$', PlayerList.as_view(), name="list"),
+    url(r'^(?P<slug>[\w-]+)/$', PlayerDetail.as_view(), name='player'),
 )
