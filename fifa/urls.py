@@ -17,6 +17,9 @@ urlpatterns = patterns(
 
     # Nations
     url(r'^nations/', include('fifa.apps.nations.urls', namespace='nations')),
+
+    # Players
+    url(r'^players/', include('fifa.apps.players.urls', namespace='players')),
 )
 
 if settings.DEBUG:
