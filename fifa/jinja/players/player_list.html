@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 
 {% block primary_content %}
+  <form action="{{ url('players:list') }}" method="post">
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+    {{ form.as_p() }}
+
+    <input type="submit">
+  </form>
+
   <ul>
     {% for player in players %}
       <li>
