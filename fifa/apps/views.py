@@ -1,6 +1,8 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.views.generic import DetailView
 
+from .players.models import Player
+
 
 class ObjectDetailView(DetailView):
     template_name = 'object.html'
@@ -23,3 +25,21 @@ class ObjectDetailView(DetailView):
             pagination = paginator.page(paginator.num_pages)
 
         return pagination
+
+    def get_context_data(self, **kwargs):
+        context = super(ObjectDetailView, self).get_context_data()
+
+        obj = self.get_object()
+        model_name = type(obj).__name__
+
+        filters = {model_name.lower(): obj}
+
+        players = Player.objects.filter(
+            **filters
+        ).select_related(
+            'club', 'league', 'nation'
+        )
+
+        context['players'] = self.pagination(players)
+
+        return context
