@@ -1,5 +1,5 @@
 const staticFolder = 'fifa/static';
-const templateFolder = 'fifa/templates';
+const templateFolder = 'fifa/jinja';
 
 export default {
   bower: {
