@@ -1,14 +1,6 @@
 {% extends 'base.html' %}
 
 {% block primary_content %}
-  <form action="{{ url('players:list') }}" method="get">
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-
-    {{ form.as_p() }}
-
-    <input type="submit">
-  </form>
-
   <ul>
     {% for player in players %}
       <li>
@@ -16,12 +8,25 @@
 
         <ul>
           {# Potentially poor way to do it #}
-          <li><a href="{{ current_url }}?nation={{ player.nation.id }}">{{ player.nation }}</a></li>
-
-          {# Probably a better more verbose way to do it #}
-          <li>{{ build_url('players:list', request=request.GET, get={'nation': player.nation.id}) }}</li>
+          <li>
+            <a href="{{ build_url('players:list', request=request.GET, get={'nation': player.nation.id}) }}">{{ player.nation }}</a>
+          </li>
+          <li>
+            <a href="{{ build_url('players:list', request=request.GET, get={'league': player.league.id}) }}">{{ player.league }}</a>
+          </li>
+          <li>
+            <a href="{{ build_url('players:list', request=request.GET, get={'club': player.club.id}) }}">{{ player.club }}</a>
+          </li>
         </ul>
       </li>
     {% endfor %}
   </ul>
+
+  <form action="{{ url('players:list') }}" method="get">
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+    {{ form.as_p() }}
+
+    <input type="submit">
+  </form>
 {% endblock %}

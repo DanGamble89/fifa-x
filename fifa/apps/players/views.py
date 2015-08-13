@@ -13,19 +13,22 @@ def build_url(*args, **kwargs):
     get = kwargs.pop('get', {})
     url = reverse(*args, **kwargs)
 
-    if hasattr(request, 'dict'):
-        for k, v in request.dict().items():
-            if '?' not in url:
-                url += '?{}={}'.format(k, v)
-            else:
-                url += '&{}={}'.format(k, v)
+    get_keys = get.keys()
 
-        for k, v in get.items():
-            if '{}={}'.format(k, v) not in url:
-                if '?' not in url:
-                    url += '?{}={}'.format(k, v)
-                else:
-                    url += '&{}={}'.format(k, v)
+    print(type(request))
+
+    if hasattr(request, 'dict'):
+        params = request.dict()
+
+        # get_key = ''.join(['{}'.format(k) for k, v in get.items()])
+        # get_value = ''.join(['{}'.format(v) for k, v in get.items()])
+        #
+        # if get_key in params and params[get_key] == get_value:
+        #     pass
+        # else:
+        params.update(**get)
+
+        url += '?{}'.format(urllib.parse.urlencode(params))
 
     return url
 
@@ -43,8 +46,6 @@ class PlayerList(ListView, FormMixin):
             context['form'] = PlayersFilterForm(self.request.GET)
         else:
             context['form'] = PlayersFilterForm()
-
-        # print(build_url('players:list', get={'nation': '167'}))
 
         context['current_url'] = self.request.get_full_path()
 
