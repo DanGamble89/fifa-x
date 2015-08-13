@@ -1,5 +1,28 @@
 {% extends 'base.html' %}
+{% import 'macros/pagination.html' as pagination %}
 
 {% block primary_content %}
   {{ league }}
+
+  {% for player in players %}
+    <ul>
+      <li>
+        <a href="{{ url('players:player', kwargs={'slug': player.slug}) }}">{{ player }} - {{ player.overall_rating }}</a>
+      </li>
+
+      <li>
+        <a href="{{ url('nations:nation', kwargs={'slug': player.slug}) }}">{{ player.nation }}</a>
+      </li>
+
+      <li>
+        {{ league }}
+      </li>
+
+      <li>
+        <a href="{{ url('clubs:club', kwargs={'slug': player.club.slug}) }}">{{ player.club }}</a>
+      </li>
+    </ul>
+  {% endfor %}
+
+  {{ pagination.pagination(players) }}
 {% endblock %}
