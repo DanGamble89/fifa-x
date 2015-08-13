@@ -3,6 +3,8 @@ from django.views.generic import DetailView
 
 
 class ObjectDetailView(DetailView):
+    template_name = 'object.html'
+
     def pagination(self, queryset, page_count=28):
         # Create pagination for the players return
         paginator = Paginator(queryset, page_count)
