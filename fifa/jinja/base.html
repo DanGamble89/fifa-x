@@ -26,6 +26,14 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
+          <nav>
+            <ul>
+              <li><a href="{{ url('players:list') }}">Players</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="col-md-12">
           {% block primary_content %}
             Hey :)
           {% endblock primary_content %}

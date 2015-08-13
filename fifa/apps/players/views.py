@@ -13,10 +13,6 @@ def build_url(*args, **kwargs):
     get = kwargs.pop('get', {})
     url = reverse(*args, **kwargs)
 
-    get_keys = get.keys()
-
-    print(type(request))
-
     if hasattr(request, 'dict'):
         params = request.dict()
 
