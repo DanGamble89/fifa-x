@@ -19,7 +19,7 @@ class LeagueDetail(ObjectDetailView):
         players = Player.objects.filter(
             league=self.get_object()
         ).select_related(
-            'club', 'nation'
+            'club', 'league', 'nation'
         )
 
         context['players'] = self.pagination(players)
