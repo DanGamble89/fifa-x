@@ -14,7 +14,7 @@
       {% for nation in object_list %}
         <tr>
           <th>
-            <a href="{% url 'nations:nation_detail' nation.slug %}">{{ nation }}</a>
+            <a href="{{ url('nations:nation', kwargs={'slug': nation.slug}) }}">{{ nation }}</a>
           </th>
 
           <th>
