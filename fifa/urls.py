@@ -15,6 +15,9 @@ urlpatterns = patterns(
     ),
     url(r'^admin/', include(admin.site.urls)),
 
+    # Clubs
+    url(r'^clubs/', include('fifa.apps.clubs.urls', namespace='clubs')),
+
     # Leagues
     url(r'^leagues/', include('fifa.apps.leagues.urls', namespace='leagues')),
 

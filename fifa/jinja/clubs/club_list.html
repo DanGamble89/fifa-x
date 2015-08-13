@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block primary_content %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Name abbreviated</th>
+        <th>Slug</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for club in object_list %}
+        <tr>
+          <th>
+            <a href="{{ url('clubs:club', kwargs={'slug': club.slug}) }}">{{ club }}</a>
+          </th>
+
+          <th>
+            <span>{{ club.name_abbr }}</span>
+          </th>
+
+          <th>
+            <span>{{ club.slug }}</span>
+          </th>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
