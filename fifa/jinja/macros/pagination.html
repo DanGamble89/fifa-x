@@ -1,0 +1,63 @@
+{% macro pagination(queryset) %}
+  {% if queryset.paginator.num_pages > 1 %}
+    <div class="pagination-centered">
+      <ul class="pagination">
+        {% if queryset.has_previous %}
+          <li class="arrow">
+            <a href="?page={{ queryset.previous_page_number }}">&laquo;</a>
+          </li>
+        {% endif %}
+
+        {% for page in queryset.paginator.page_range %}
+          {% if loop.first %}
+            <li {% if loop.index == queryset.number %}class="current"{% endif %}>
+              <a href="?page={{ page }}">{{ page }}</a>
+            </li>
+          {% elif loop.last %}
+            <li {% if loop.index == queryset.number %}class="current"{% endif %}>
+              <a href="?page={{ page }}">{{ page }}</a>
+            </li>
+          {% elif loop.index == queryset.number %}
+            <li class="current">
+              <a href="?page={{ page }}">{{ queryset.number }}</a>
+            </li>
+          {% elif loop.index == queryset.number - 1 %}
+            {% if loop.index == 2 %}
+
+            {% else %}
+              <li class="unavailable">
+                <a href="">&hellip;</a>
+              </li>
+            {% endif %}
+            <li>
+              <a href="?page={{ page }}">{{ page }}</a>
+            </li>
+          {% elif loop.index == queryset.number + 1 %}
+            <li>
+              <a href="?page={{ page }}">{{ page }}</a>
+            </li>
+            {% if queryset.paginator.num_pages == queryset.number + 2 %}
+
+            {% else %}
+              <li class="unavailable">
+                <a href="">&hellip;</a>
+              </li>
+            {% endif %}
+          {% elif loop.index < queryset.number or loop.index > queryset.number %}
+
+          {% else %}
+            <li>
+              <a href="?page={{ page }}">{{ page }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+
+        {% if queryset.has_next %}
+          <li class="arrow">
+            <a href="?page={{ queryset.next_page_number }}">&raquo;</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  {% endif %}
+{% endmacro %}
