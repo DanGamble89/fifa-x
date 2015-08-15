@@ -11,6 +11,16 @@
   {{ object.player_count_silver }}
   {{ object.player_count_bronze }}
 
+  {% if object.nation %}
+    Nation: <a href="{{ url('nations:nation', kwargs={'slug': object.nation.slug}) }}">{{ object.nation }}</a>
+  {% elif object.league %}
+    League: {{ object.league }}
+  {% endif %}
+
+  {% if object.club_set %}
+    Clubs: {% for club in object.club_set.all() %}<a href="{{ url('clubs:club', kwargs={'slug': club.slug}) }}">{{ club }}</a>{% endfor %}
+  {% endif %}
+
   <ul>
     <li>
       Level
@@ -96,6 +106,8 @@
         <a href="{{ url('clubs:club', kwargs={'slug': player.club.slug}) }}">{{ player.club }}</a>
       </li>
     </ul>
+  {% else %}
+    There are no players!
   {% endfor %}
 
   {{ pagination.pagination(players) }}
