@@ -17,12 +17,12 @@
 
       <ul>
         <li>
-          <a href="{{ url('nations:nation', request=request.GET, remove='color', kwargs={'slug': object.slug}) }}">all</a>
+          <a href="{{ url(url_namespace, request=request.GET, remove='color', kwargs={'slug': object.slug}) }}">all</a>
         </li>
 
         {% for value, option in player_instance.player_levels %}
           <li>
-            <a href="{{ url('nations:nation', request=request.GET, get={'color': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a>
+            <a href="{{ url(url_namespace, request=request.GET, get={'color': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a>
           </li>
         {% endfor %}
       </ul>
@@ -33,11 +33,11 @@
 
       <ul>
         <li>
-          <a href="{{ url('nations:nation', request=request.GET, remove='position_full', kwargs={'slug': object.slug}) }}">all</a>
+          <a href="{{ url(url_namespace, request=request.GET, remove='position_full', kwargs={'slug': object.slug}) }}">all</a>
         </li>
 
         {% for value, option in player_instance.player_positions %}
-          <li><a href="{{ url('nations:nation', request=request.GET, get={'position_full': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a></li>
+          <li><a href="{{ url(url_namespace, request=request.GET, get={'position_full': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a></li>
         {% endfor %}
       </ul>
     </li>
@@ -47,12 +47,12 @@
 
       <ul>
         <li>
-          <a href="{{ url('nations:nation', request=request.GET, remove='position_line', kwargs={'slug': object.slug}) }}">all</a>
+          <a href="{{ url(url_namespace, request=request.GET, remove='position_line', kwargs={'slug': object.slug}) }}">all</a>
         </li>
 
         {% for value, option in player_instance.player_position_lines.items() %}
           <li>
-            <a href="{{ url('nations:nation', request=request.GET, get={'position_line': value}, kwargs={'slug': object.slug}) }}">{{ value }}</a>
+            <a href="{{ url(url_namespace, request=request.GET, get={'position_line': value}, kwargs={'slug': object.slug}) }}">{{ value }}</a>
           </li>
         {% endfor %}
       </ul>
@@ -60,18 +60,18 @@
 
     <li>
       Sort
-      <a href="{{ url('nations:nation', request=request.GET, get={'order': 'asc'}, kwargs={'slug': object.slug}) }}">Asc</a>
+      <a href="{{ url(url_namespace, request=request.GET, get={'order': 'asc'}, kwargs={'slug': object.slug}) }}">Asc</a>
 
-      <a href="{{ url('nations:nation', request=request.GET, get={'order': 'desc'}, kwargs={'slug': object.slug}) }}">Desc</a>
+      <a href="{{ url(url_namespace, request=request.GET, get={'order': 'desc'}, kwargs={'slug': object.slug}) }}">Desc</a>
 
       <ul>
         <li>
-          <a href="{{ url('nations:nation', request=request.GET, remove='sort', kwargs={'slug': object.slug}) }}">all</a>
+          <a href="{{ url(url_namespace, request=request.GET, remove='sort', kwargs={'slug': object.slug}) }}">all</a>
         </li>
 
         {% for k, v in sort_filters|dictsort %}
           <li>
-            <a href="{{ url('nations:nation', request=request.GET, get={'sort': k}, kwargs={'slug': object.slug}) }}">{{ v }}</a>
+            <a href="{{ url(url_namespace, request=request.GET, get={'sort': k}, kwargs={'slug': object.slug}) }}">{{ v }}</a>
           </li>
         {% endfor %}
       </ul>
@@ -85,7 +85,7 @@
       </li>
 
       <li>
-        <a href="{{ url('nations:nation', kwargs={'slug': player.nation.slug}) }}">{{ player.nation }}</a>
+        <a href="{{ url(url_namespace, kwargs={'slug': player.nation.slug}) }}">{{ player.nation }}</a>
       </li>
 
       <li>

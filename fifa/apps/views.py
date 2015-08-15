@@ -26,8 +26,6 @@ class ObjectDetailView(DetailView):
             # If page is out of range (e.g. 9999), deliver last page of results.
             pagination = paginator.page(paginator.num_pages)
 
-        print(pagination)
-
         return pagination
 
     def get_context_data(self, **kwargs):
@@ -54,9 +52,12 @@ class ObjectDetailView(DetailView):
             **filters
         ).select_related(
             'club', 'league', 'nation'
-        ).order_by(
-            '{}{}'.format('-' if sort_order == 'desc' else '', sort_by)
         )
+
+        if sort_by:
+            players = players.order_by(
+                '{}{}'.format('-' if sort_order == 'desc' else '', sort_by)
+            )
 
         # Grab the form so we can get the fields we filter by
         player_filter_form = PlayersFilterForm()
@@ -72,7 +73,8 @@ class ObjectDetailView(DetailView):
         context.update({
             'players': self.pagination(players),
             'player_instance': PLAYER_HELPERS,
-            'sort_filters': sort_filters
+            'sort_filters': sort_filters,
+            'url_namespace': '{}:{}'.format('{}s'.format(model_name), model_name).lower()
         })
 
         return context
