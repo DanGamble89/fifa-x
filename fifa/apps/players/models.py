@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from datetime import date
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
@@ -7,32 +8,31 @@ from ..leagues.models import League
 from ..nations.models import Nation
 from fifa.models import TimeStampedModel, EaModel
 
-
 PLAYER_POSITION_CHOICES = (
-    ('gk', 'GK'),
-    ('rwb', 'RWB'),
-    ('rb', 'RB'),
-    ('cb', 'CB'),
-    ('lb', 'LB'),
-    ('lwb', 'LWB'),
-    ('cdm', 'CDM'),
-    ('cm', 'CM'),
-    ('cam', 'CAM'),
-    ('rm', 'RM'),
-    ('rw', 'RW'),
-    ('rf', 'RF'),
-    ('lm', 'LM'),
-    ('lw', 'LW'),
-    ('lf', 'LF'),
-    ('cf', 'CF'),
-    ('st', 'ST')
+    ('GK', 'GK'),
+    ('RWB', 'RWB'),
+    ('RB', 'RB'),
+    ('CB', 'CB'),
+    ('LB', 'LB'),
+    ('LWB', 'LWB'),
+    ('CDM', 'CDM'),
+    ('CM', 'CM'),
+    ('CAM', 'CAM'),
+    ('RM', 'RM'),
+    ('RW', 'RW'),
+    ('RF', 'RF'),
+    ('LM', 'LM'),
+    ('LW', 'LW'),
+    ('LF', 'LF'),
+    ('CF', 'CF'),
+    ('ST', 'ST')
 )
 
 PLAYER_POSITION_LINE_CHOICES = (
-    ('gk', 'GK'),
-    ('def', 'DEF'),
-    ('mid', 'MID'),
-    ('att', 'ATT')
+    ('GK', 'GK'),
+    ('DEF', 'DEF'),
+    ('MID', 'MID'),
+    ('ATT', 'ATT')
 )
 
 PLAYER_WORKRATE_CHOICES = (
@@ -46,6 +46,47 @@ PLAYER_POSITION_LINES = {
     'DEF': ['RB', 'RWB', 'CB', 'LB', 'LWB'],
     'MID': ['CDM', 'CM', 'CAM', 'RM', 'RW', 'LM', 'LW'],
     'ATT': ['CF', 'ST', 'RF', 'LF']
+}
+
+SPECIAL_TYPES = ['team of the week', 'team of the year', 'team of the season',
+                 'special edition', 'man of the match']
+
+
+PLAYER_LEVELS = (
+    ('bronze', 'Bronze'),
+    ('silver', 'Silver'),
+    ('gold', 'Gold'),
+    ('rare_bronze', 'Rare Bronze'),
+    ('rare_silver', 'Rare Silver'),
+    ('rare_gold', 'Rare Gold'),
+    ('totw_bronze', 'TOTW Bronze'),
+    ('totw_silver', 'TOTW Silver'),
+    ('totw_gold', 'TOTW Gold'),
+    ('tots_bronze', 'TOTS Bronze'),
+    ('tots_silver', 'TOTS Silver'),
+    ('tots_gold', 'TOTS Gold'),
+    ('toty', 'TOTY'),
+    ('motm', 'MOTM'),
+    ('easports', 'EA Sports'),
+    ('purple', 'Purple'),
+    ('green', 'Green'),
+    ('pink', 'Pink'),
+    ('legend', 'Legend')
+)
+
+
+def player_position_lines():
+    keys = ['GK', 'DEF', 'MID', 'ATT']
+
+    return OrderedDict(
+        sorted(PLAYER_POSITION_LINES.items(), key=lambda i: keys.index(i[0])))
+
+
+PLAYER_HELPERS = {
+    'special_types': SPECIAL_TYPES,
+    'player_levels': PLAYER_LEVELS,
+    'player_positions': PLAYER_POSITION_CHOICES,
+    'player_position_lines': player_position_lines()
 }
 
 
@@ -72,7 +113,8 @@ class Player(TimeStampedModel, EaModel):
 
     # Positions
     position = models.CharField(max_length=3, choices=PLAYER_POSITION_CHOICES)
-    position_line = models.CharField(max_length=3, choices=PLAYER_POSITION_LINE_CHOICES)
+    position_line = models.CharField(max_length=3,
+                                     choices=PLAYER_POSITION_LINE_CHOICES)
     position_full = models.CharField(max_length=3)
 
     # Personal
@@ -120,12 +162,17 @@ class Player(TimeStampedModel, EaModel):
     preferred_foot = models.CharField(max_length=255)
 
     # Descriptions
-    traits = ArrayField(models.TextField(max_length=255, blank=True, null=True), blank=True, null=True)
-    specialities = ArrayField(models.TextField(max_length=255, blank=True, null=True), blank=True, null=True)
+    traits = ArrayField(models.TextField(max_length=255, blank=True, null=True),
+                        blank=True, null=True)
+    specialities = ArrayField(
+        models.TextField(max_length=255, blank=True, null=True), blank=True,
+        null=True)
 
     # Workrates
-    workrate_att = models.CharField(max_length=10, choices=PLAYER_WORKRATE_CHOICES)
-    workrate_def = models.CharField(max_length=10, choices=PLAYER_WORKRATE_CHOICES)
+    workrate_att = models.CharField(max_length=10,
+                                    choices=PLAYER_WORKRATE_CHOICES)
+    workrate_def = models.CharField(max_length=10,
+                                    choices=PLAYER_WORKRATE_CHOICES)
 
     # Card stats
     card_att_1 = models.PositiveIntegerField()
@@ -161,33 +208,5 @@ class Player(TimeStampedModel, EaModel):
         # Might be able to get an age from Postgres age(), use this for now
         today = date.today()
 
-        return today.year - self.birthdate.year - ((today.month, today.day) < (self.birthdate.month, self.birthdate.day))
-
-    @staticmethod
-    def special_types():
-        return ['team of the week', 'team of the year', 'team of the season',
-                'special edition', 'man of the match']
-
-    @staticmethod
-    def player_levels():
-        return (
-            ('bronze', 'Bronze'),
-            ('silver', 'Silver'),
-            ('gold', 'Gold'),
-            ('rare_bronze', 'Rare Bronze'),
-            ('rare_silver', 'Rare Silver'),
-            ('rare_gold', 'Rare Gold'),
-            ('totw_bronze', 'TOTW Bronze'),
-            ('totw_silver', 'TOTW Silver'),
-            ('totw_gold', 'TOTW Gold'),
-            ('tots_bronze', 'TOTS Bronze'),
-            ('tots_silver', 'TOTS Silver'),
-            ('tots_gold', 'TOTS Gold'),
-            ('toty', 'TOTY'),
-            ('motm', 'MOTM'),
-            ('easports', 'EA Sports'),
-            ('purple', 'Purple'),
-            ('green', 'Green'),
-            ('pink', 'Pink'),
-            ('legend', 'Legend')
-        )
+        return today.year - self.birthdate.year - (
+            (today.month, today.day) < (self.birthdate.month, self.birthdate.day))
