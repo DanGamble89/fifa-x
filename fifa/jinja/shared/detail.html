@@ -24,22 +24,22 @@
 
       <ul class="list">
         <li class="list_item">
-          <a href="{{ url(url_namespace, request=request.GET, remove=['position_full', 'position_line', 'position_group'], kwargs={'slug': object.slug}) }}">All positions</a>
+          <a href="{{ url(url_namespace, request=request.GET, remove=['position', 'position_line', 'position_group'], kwargs={'slug': object.slug}) }}">All positions</a>
         </li>
 
         {% for value, option in player_instance.player_position_lines %}
           <li class="list_item">
-            <a href="{{ url(url_namespace, request=request.GET, remove=['position_full', 'group'], get={'position_line': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a>
+            <a href="{{ url(url_namespace, request=request.GET, remove=['position', 'group'], get={'position_line': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a>
           </li>
         {% endfor %}
 
-        <li class="list_item">
-          <a href="#">Positions</a>
+        <li class="list_item has-children">
+          <a href="#">Positions <i class="fa fa-chevron-right"></i></a>
 
           <ul class="list">
             {% for value, option in player_instance.player_positions %}
               <li class="list_item">
-                <a href="{{ url(url_namespace, request=request.GET, remove=['position_line', 'group'], get={'position_full': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a>
+                <a href="{{ url(url_namespace, request=request.GET, remove=['position_line', 'group'], get={'position': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a>
               </li>
             {% endfor %}
           </ul>
@@ -47,7 +47,7 @@
 
         {% for value, option in player_instance.player_position_groups %}
           <li class="list_item">
-            <a href="{{ url(url_namespace, request=request.GET, remove=['position_full', 'position_line'], get={'group': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a>
+            <a href="{{ url(url_namespace, request=request.GET, remove=['position', 'position_line'], get={'group': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a>
           </li>
         {% endfor %}
       </ul>
