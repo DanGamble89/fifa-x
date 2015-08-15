@@ -162,3 +162,8 @@ class Player(TimeStampedModel, EaModel):
         today = date.today()
 
         return today.year - self.birthdate.year - ((today.month, today.day) < (self.birthdate.month, self.birthdate.day))
+
+    @staticmethod
+    def special_types():
+        return ['team of the week', 'team of the year', 'team of the season',
+                'special edition', 'man of the match']

@@ -4,6 +4,13 @@
 {% block primary_content %}
   {{ object }}
 
+  {{ object.player_average_rating }}
+  {{ object.player_count }}
+  {{ object.player_count_special }}
+  {{ object.player_count_gold }}
+  {{ object.player_count_silver }}
+  {{ object.player_count_bronze }}
+
   {% for player in players %}
     <ul>
       <li>
