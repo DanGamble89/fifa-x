@@ -26,6 +26,8 @@ class ObjectDetailView(DetailView):
             # If page is out of range (e.g. 9999), deliver last page of results.
             pagination = paginator.page(paginator.num_pages)
 
+        print(pagination)
+
         return pagination
 
     def get_context_data(self, **kwargs):
@@ -33,18 +35,21 @@ class ObjectDetailView(DetailView):
 
         obj = self.get_object()
         model_name = type(obj).__name__
-        player_filter_form = PlayersFilterForm()
-        # Some of the keys are wrong 'sho_han' for example, need to get the model field name
-        sort_filters = {slugify(field.label).replace('-', '_'): field.label for field in player_filter_form}
 
-        print(sort_filters)
+        # Creates club=club, league=league, etc.
+        filters = {model_name.lower(): obj}
 
+        # Grab all of the things we want to filter the players by
         get_filters = self.request.GET.dict()
+
+        # Remove the page key as that is for pagination
+        get_filters.pop('page', '')
+
+        # These are for ordering by, not filtering
         sort_by = get_filters.pop('sort', '')
         sort_order = get_filters.pop('order', '')
 
-        filters = {model_name.lower(): obj}
-
+        # Get our initial lot of players
         players = Player.objects.filter(
             **filters
         ).select_related(
@@ -53,6 +58,13 @@ class ObjectDetailView(DetailView):
             '{}{}'.format('-' if sort_order == 'desc' else '', sort_by)
         )
 
+        # Grab the form so we can get the fields we filter by
+        player_filter_form = PlayersFilterForm()
+
+        # Some of the keys are wrong 'sho_han' for example, need to get the model field name
+        sort_filters = {slugify(field.label).replace('-', '_'): field.label for field in player_filter_form}
+
+        # Filter even further based on the GET parameters
         players = players.filter(
             **get_filters
         )

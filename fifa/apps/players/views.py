@@ -9,10 +9,15 @@ import urllib.parse
 
 
 def build_url(*args, **kwargs):
+    print(*args)
     request = kwargs.pop('request', {})
     get = kwargs.pop('get', {})
     remove = kwargs.pop('remove', '')
-    url = reverse(*args, **kwargs)
+    url = '?'
+
+    # Sometimes no 'viewname' is passed i.e. building pagination links
+    if args or kwargs:
+        url = reverse(*args, **kwargs)
 
     if hasattr(request, 'dict'):
         params = request.dict()
@@ -28,7 +33,7 @@ def build_url(*args, **kwargs):
         # else:
         params.update(**get)
 
-        url += '?{}'.format(urllib.parse.urlencode(params))
+        url += '{}'.format(urllib.parse.urlencode(params))
 
     return url
 
