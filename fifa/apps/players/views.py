@@ -22,7 +22,8 @@ def build_url(*args, **kwargs):
         params = request.dict()
 
         if remove:
-            params.pop(remove, None)
+            for item in remove:
+                params.pop(item, None)
 
         # get_key = ''.join(['{}'.format(k) for k, v in get.items()])
         # get_value = ''.join(['{}'.format(v) for k, v in get.items()])
