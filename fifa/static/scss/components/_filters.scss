@@ -1,0 +1,81 @@
+/*****************************************************************************/
+/* Filters */
+/*****************************************************************************/
+.filters {
+  display: flex;
+}
+
+/*****************************************************************************/
+/* Filter lists */
+/*****************************************************************************/
+.filter_list {
+  position: relative;
+
+  &:hover {
+    > .list {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  a {
+    display: block;
+    padding-top: 4px;
+    padding-right: 10px;
+    padding-bottom: 4px;
+    padding-left: 10px;
+
+    color: #444;
+  }
+
+  .list {
+    position: absolute;
+
+    min-width: 200px;
+
+    background-color: #fff;
+    border: 1px solid #ececec;
+    opacity: 0;
+    visibility: hidden;
+
+    transition: all 0.3s;
+
+    .list {
+      top: -1px;
+      left: 100%;
+    }
+  }
+
+  .list_item {
+    position: relative;
+
+    border-bottom: 1px solid #ececec;
+
+    white-space: nowrap;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    &:hover > .list {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+/* ---------------- /
+Filter label
+/ ---------------- */
+.filter_label {
+  margin-right: 4px;
+  margin-left: 4px;
+  padding: 6px;
+
+  cursor: pointer;
+
+  .filter_list:first-child & {
+    margin-left: 0;
+    padding-left: 0;
+  }
+}

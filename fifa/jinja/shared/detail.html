@@ -1,6 +1,84 @@
 {% extends 'base.html' %}
 {% import 'macros/pagination.html' as pagination with context %}
 
+{% block control_strip %}
+  <div class="filters [ list list-inline ]">
+    <div class="filter_list [ list_item ]">
+      <div class="filter_label">Colors</div>
+
+      <ul class="list">
+        <li class="list_item">
+          <a href="{{ url(url_namespace, request=request.GET, remove='color', kwargs={'slug': object.slug}) }}">All</a>
+        </li>
+
+        {% for value, option in player_instance.player_levels %}
+          <li class="list_item">
+            <a href="{{ url(url_namespace, request=request.GET, get={'color': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="filter_list [ list_item ]">
+      <div class="filter_label">Positions</div>
+
+      <ul class="list">
+        <li class="list_item">
+          <a href="{{ url(url_namespace, request=request.GET, remove=['position_full', 'position_line', 'position_group'], kwargs={'slug': object.slug}) }}">All positions</a>
+        </li>
+
+        {% for value, option in player_instance.player_position_lines %}
+          <li class="list_item">
+            <a href="{{ url(url_namespace, request=request.GET, remove=['position_full', 'group'], get={'position_line': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a>
+          </li>
+        {% endfor %}
+
+        <li class="list_item">
+          <a href="#">Positions</a>
+
+          <ul class="list">
+            {% for value, option in player_instance.player_positions %}
+              <li class="list_item">
+                <a href="{{ url(url_namespace, request=request.GET, remove=['position_line', 'group'], get={'position_full': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+
+        {% for value, option in player_instance.player_position_groups %}
+          <li class="list_item">
+            <a href="{{ url(url_namespace, request=request.GET, remove=['position_full', 'position_line'], get={'group': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="filter_list [ list_item ]">
+      <div class="filter_label">Sorting</div>
+
+      <ul class="list">
+        <li class="list_item">
+          <a href="{{ url(url_namespace, request=request.GET, get={'order': 'asc'}, kwargs={'slug': object.slug}) }}">Asc</a>
+        </li>
+
+        <li class="list_item">
+          <a href="{{ url(url_namespace, request=request.GET, get={'order': 'desc'}, kwargs={'slug': object.slug}) }}">Desc</a>
+        </li>
+
+        <li class="list_item">
+          <a href="{{ url(url_namespace, request=request.GET, remove='sort', kwargs={'slug': object.slug}) }}">All</a>
+        </li>
+
+        {% for k, v in sort_filters|dictsort %}
+          <li class="list_item">
+            <a href="{{ url(url_namespace, request=request.GET, get={'sort': k}, kwargs={'slug': object.slug}) }}">{{ v }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endblock %}
+
 {% block primary_content %}
   {{ object }}
 
@@ -20,73 +98,6 @@
   {% if object.club_set %}
     Clubs: {% for club in object.club_set.all() %}<a href="{{ url('clubs:club', kwargs={'slug': club.slug}) }}">{{ club }}</a>{% endfor %}
   {% endif %}
-
-  <ul>
-    <li>
-      Level
-
-      <ul>
-        <li>
-          <a href="{{ url(url_namespace, request=request.GET, remove='color', kwargs={'slug': object.slug}) }}">all</a>
-        </li>
-
-        {% for value, option in player_instance.player_levels %}
-          <li>
-            <a href="{{ url(url_namespace, request=request.GET, get={'color': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a>
-          </li>
-        {% endfor %}
-      </ul>
-    </li>
-
-    <li>
-      Player Positions
-
-      <ul>
-        <li>
-          <a href="{{ url(url_namespace, request=request.GET, remove='position_full', kwargs={'slug': object.slug}) }}">all</a>
-        </li>
-
-        {% for value, option in player_instance.player_positions %}
-          <li><a href="{{ url(url_namespace, request=request.GET, get={'position_full': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a></li>
-        {% endfor %}
-      </ul>
-    </li>
-
-    <li>
-      Player Lines
-
-      <ul>
-        <li>
-          <a href="{{ url(url_namespace, request=request.GET, remove='position_line', kwargs={'slug': object.slug}) }}">all</a>
-        </li>
-
-        {% for value, option in player_instance.player_position_lines.items() %}
-          <li>
-            <a href="{{ url(url_namespace, request=request.GET, get={'position_line': value}, kwargs={'slug': object.slug}) }}">{{ value }}</a>
-          </li>
-        {% endfor %}
-      </ul>
-    </li>
-
-    <li>
-      Sort
-      <a href="{{ url(url_namespace, request=request.GET, get={'order': 'asc'}, kwargs={'slug': object.slug}) }}">Asc</a>
-
-      <a href="{{ url(url_namespace, request=request.GET, get={'order': 'desc'}, kwargs={'slug': object.slug}) }}">Desc</a>
-
-      <ul>
-        <li>
-          <a href="{{ url(url_namespace, request=request.GET, remove='sort', kwargs={'slug': object.slug}) }}">all</a>
-        </li>
-
-        {% for k, v in sort_filters|dictsort %}
-          <li>
-            <a href="{{ url(url_namespace, request=request.GET, get={'sort': k}, kwargs={'slug': object.slug}) }}">{{ v }}</a>
-          </li>
-        {% endfor %}
-      </ul>
-    </li>
-  </ul>
 
   {% for player in players %}
     <ul>

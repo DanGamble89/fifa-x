@@ -18,6 +18,8 @@
 /*****************************************************************************/
 /* Base */
 /*****************************************************************************/
+@import "components/control-strip";
+@import "components/filters";
 @import "components/lists";
 @import "components/typography";
 
@@ -25,12 +27,3 @@
 /* Components */
 /*****************************************************************************/
 @import "components/header";
-
-html,
-body {
-  font-size: 100%;
-}
-
-a {
-  font-size: 1rem;
-}
