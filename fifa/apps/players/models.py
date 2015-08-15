@@ -167,3 +167,27 @@ class Player(TimeStampedModel, EaModel):
     def special_types():
         return ['team of the week', 'team of the year', 'team of the season',
                 'special edition', 'man of the match']
+
+    @staticmethod
+    def player_levels():
+        return (
+            ('bronze', 'Bronze'),
+            ('silver', 'Silver'),
+            ('gold', 'Gold'),
+            ('rare_bronze', 'Rare Bronze'),
+            ('rare_silver', 'Rare Silver'),
+            ('rare_gold', 'Rare Gold'),
+            ('totw_bronze', 'TOTW Bronze'),
+            ('totw_silver', 'TOTW Silver'),
+            ('totw_gold', 'TOTW Gold'),
+            ('tots_bronze', 'TOTS Bronze'),
+            ('tots_silver', 'TOTS Silver'),
+            ('tots_gold', 'TOTS Gold'),
+            ('toty', 'TOTY'),
+            ('motm', 'MOTM'),
+            ('easports', 'EA Sports'),
+            ('purple', 'Purple'),
+            ('green', 'Green'),
+            ('pink', 'Pink'),
+            ('legend', 'Legend')
+        )
