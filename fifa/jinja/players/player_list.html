@@ -9,13 +9,13 @@
         <ul>
           {# Potentially poor way to do it #}
           <li>
-            <a href="{{ build_url('players:list', request=request.GET, get={'nation': player.nation.id}) }}">{{ player.nation }}</a>
+            <a href="{{ url('players:list', request=request.GET, get={'nation': player.nation.id}) }}">{{ player.nation }}</a>
           </li>
           <li>
-            <a href="{{ build_url('players:list', request=request.GET, get={'league': player.league.id}) }}">{{ player.league }}</a>
+            <a href="{{ url('players:list', request=request.GET, get={'league': player.league.id}) }}">{{ player.league }}</a>
           </li>
           <li>
-            <a href="{{ build_url('players:list', request=request.GET, get={'club': player.club.id}) }}">{{ player.club }}</a>
+            <a href="{{ url('players:list', request=request.GET, get={'club': player.club.id}) }}">{{ player.club }}</a>
           </li>
         </ul>
       </li>
