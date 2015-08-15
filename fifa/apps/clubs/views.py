@@ -1,6 +1,7 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView
 
 from .models import Club
+from ..views import ObjectDetailView
 
 
 class ClubList(ListView):
@@ -8,5 +9,5 @@ class ClubList(ListView):
     paginate_by = 50
 
 
-class ClubDetail(DetailView):
+class ClubDetail(ObjectDetailView):
     model = Club
