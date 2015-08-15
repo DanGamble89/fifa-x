@@ -5,7 +5,7 @@ from .players.models import Player
 
 
 class ObjectDetailView(DetailView):
-    template_name = 'object.html'
+    template_name = 'shared/detail.html'
 
     def pagination(self, queryset, page_count=28):
         # Create pagination for the players return
@@ -39,6 +39,12 @@ class ObjectDetailView(DetailView):
         ).select_related(
             'club', 'league', 'nation'
         )
+
+        players = players.filter(
+            **self.request.GET.dict()
+        )
+
+        context['levels'] = Player.player_levels()
 
         context['players'] = self.pagination(players)
 

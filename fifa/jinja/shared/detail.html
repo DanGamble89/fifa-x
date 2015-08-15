@@ -11,6 +11,20 @@
   {{ object.player_count_silver }}
   {{ object.player_count_bronze }}
 
+  <ul>
+    <li>
+      Level
+
+      <ul>
+        {% for value, option in levels %}
+          <li>
+            <a href="{{ build_url('nations:nation', request=request.GET, get={'color': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </li>
+  </ul>
+
   {% for player in players %}
     <ul>
       <li>
