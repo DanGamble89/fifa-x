@@ -11,10 +11,14 @@ import urllib.parse
 def build_url(*args, **kwargs):
     request = kwargs.pop('request', {})
     get = kwargs.pop('get', {})
+    remove = kwargs.pop('remove', '')
     url = reverse(*args, **kwargs)
 
     if hasattr(request, 'dict'):
         params = request.dict()
+
+        if remove:
+            params.pop(remove, None)
 
         # get_key = ''.join(['{}'.format(k) for k, v in get.items()])
         # get_value = ''.join(['{}'.format(v) for k, v in get.items()])

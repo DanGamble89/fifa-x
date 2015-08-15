@@ -1,7 +1,9 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.utils.text import slugify
 from django.views.generic import DetailView
 
-from .players.models import Player
+from .players.models import Player, PLAYER_HELPERS
+from .players.forms import PlayersFilterForm
 
 
 class ObjectDetailView(DetailView):
@@ -31,6 +33,15 @@ class ObjectDetailView(DetailView):
 
         obj = self.get_object()
         model_name = type(obj).__name__
+        player_filter_form = PlayersFilterForm()
+        # Some of the keys are wrong 'sho_han' for example, need to get the model field name
+        sort_filters = {slugify(field.label).replace('-', '_'): field.label for field in player_filter_form}
+
+        print(sort_filters)
+
+        get_filters = self.request.GET.dict()
+        sort_by = get_filters.pop('sort', '')
+        sort_order = get_filters.pop('order', '')
 
         filters = {model_name.lower(): obj}
 
@@ -38,14 +49,18 @@ class ObjectDetailView(DetailView):
             **filters
         ).select_related(
             'club', 'league', 'nation'
+        ).order_by(
+            '{}{}'.format('-' if sort_order == 'desc' else '', sort_by)
         )
 
         players = players.filter(
-            **self.request.GET.dict()
+            **get_filters
         )
 
-        context['levels'] = Player.player_levels()
-
-        context['players'] = self.pagination(players)
+        context.update({
+            'players': self.pagination(players),
+            'player_instance': PLAYER_HELPERS,
+            'sort_filters': sort_filters
+        })
 
         return context

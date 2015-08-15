@@ -14,5 +14,12 @@ class PlayersFilterForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PlayersFilterForm, self).__init__(*args, **kwargs)
 
+        self.fields['card_att_1'].label = 'PAC / DIV'
+        self.fields['card_att_2'].label = 'SHO / HAN'
+        self.fields['card_att_3'].label = 'PAS / KIC'
+        self.fields['card_att_4'].label = 'DRI / REF'
+        self.fields['card_att_5'].label = 'DEF / SPE'
+        self.fields['card_att_6'].label = 'PHY / POS'
+
         for key, field in self.fields.items():
             self.fields[key].required = False

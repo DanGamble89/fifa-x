@@ -16,9 +16,62 @@
       Level
 
       <ul>
-        {% for value, option in levels %}
+        <li>
+          <a href="{{ build_url('nations:nation', request=request.GET, remove='color', kwargs={'slug': object.slug}) }}">all</a>
+        </li>
+
+        {% for value, option in player_instance.player_levels %}
           <li>
             <a href="{{ build_url('nations:nation', request=request.GET, get={'color': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </li>
+
+    <li>
+      Player Positions
+
+      <ul>
+        <li>
+          <a href="{{ build_url('nations:nation', request=request.GET, remove='position_full', kwargs={'slug': object.slug}) }}">all</a>
+        </li>
+
+        {% for value, option in player_instance.player_positions %}
+          <li><a href="{{ build_url('nations:nation', request=request.GET, get={'position_full': value}, kwargs={'slug': object.slug}) }}">{{ option }}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+
+    <li>
+      Player Lines
+
+      <ul>
+        <li>
+          <a href="{{ build_url('nations:nation', request=request.GET, remove='position_line', kwargs={'slug': object.slug}) }}">all</a>
+        </li>
+
+        {% for value, option in player_instance.player_position_lines.items() %}
+          <li>
+            <a href="{{ build_url('nations:nation', request=request.GET, get={'position_line': value}, kwargs={'slug': object.slug}) }}">{{ value }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </li>
+
+    <li>
+      Sort
+      <a href="{{ build_url('nations:nation', request=request.GET, get={'order': 'asc'}, kwargs={'slug': object.slug}) }}">Asc</a>
+
+      <a href="{{ build_url('nations:nation', request=request.GET, get={'order': 'desc'}, kwargs={'slug': object.slug}) }}">Desc</a>
+
+      <ul>
+        <li>
+          <a href="{{ build_url('nations:nation', request=request.GET, remove='sort', kwargs={'slug': object.slug}) }}">all</a>
+        </li>
+
+        {% for k, v in sort_filters|dictsort %}
+          <li>
+            <a href="{{ build_url('nations:nation', request=request.GET, get={'sort': k}, kwargs={'slug': object.slug}) }}">{{ v }}</a>
           </li>
         {% endfor %}
       </ul>
@@ -28,7 +81,7 @@
   {% for player in players %}
     <ul>
       <li>
-        <a href="{{ url('players:player', kwargs={'slug': player.slug}) }}">{{ player }} - {{ player.overall_rating }}</a>
+        <a href="{{ url('players:player', kwargs={'slug': player.slug}) }}">{{ player }} - {{ player.overall_rating }} - {{ player.position_line }}</a>
       </li>
 
       <li>
