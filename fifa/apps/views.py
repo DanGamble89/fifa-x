@@ -43,6 +43,11 @@ class ObjectDetailView(DetailView):
         # Remove the page key as that is for pagination
         get_filters.pop('page', '')
 
+        position_group = get_filters.pop('group', '')
+
+        if position_group:
+            filters['position__in'] = position_group.upper().split('-')
+
         # These are for ordering by, not filtering
         sort_by = get_filters.pop('sort', '')
         sort_order = get_filters.pop('order', '')

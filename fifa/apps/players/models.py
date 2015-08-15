@@ -29,10 +29,20 @@ PLAYER_POSITION_CHOICES = (
 )
 
 PLAYER_POSITION_LINE_CHOICES = (
-    ('GK', 'GK'),
-    ('DEF', 'DEF'),
-    ('MID', 'MID'),
-    ('ATT', 'ATT')
+    ('GK', 'Goalkeepers'),
+    ('DEF', 'Defenders'),
+    ('MID', 'Midfielders'),
+    ('ATT', 'Attackers')
+)
+
+PLAYER_POSITION_GROUPS = (
+    ('cb', 'CB'),
+    ('rb-rwb', 'RB/RWB'),
+    ('lb-lwb', 'LB/LWB'),
+    ('cdm-cm-cam', 'CDM/CM/CAM'),
+    ('rm-rw-rf', 'RM/RW/RF'),
+    ('lm-lw-lf', 'LM/LW/LF'),
+    ('cf-st', 'CF/ST')
 )
 
 PLAYER_WORKRATE_CHOICES = (
@@ -86,7 +96,8 @@ PLAYER_HELPERS = {
     'special_types': SPECIAL_TYPES,
     'player_levels': PLAYER_LEVELS,
     'player_positions': PLAYER_POSITION_CHOICES,
-    'player_position_lines': player_position_lines()
+    'player_position_lines': PLAYER_POSITION_LINE_CHOICES,
+    'player_position_groups': PLAYER_POSITION_GROUPS
 }
 
 
