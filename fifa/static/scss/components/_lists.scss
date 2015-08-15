@@ -1,0 +1,60 @@
+/*****************************************************************************/
+/* Base */
+/*****************************************************************************/
+ul[class] {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+/*****************************************************************************/
+/* Inline */
+/*****************************************************************************/
+.list-inline {
+  display: flex;
+
+  .list_item {
+    padding-right: 10px;
+    padding-left: 10px;
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  &.is-reversed {
+    flex-direction: row-reverse;
+  }
+}
+
+/*****************************************************************************/
+/* Nav */
+/*****************************************************************************/
+.list-nav {
+  &.is-reversed {
+    .list_item:first-child {
+      margin-right: 0;
+
+      a {
+        padding-right: 0;
+      }
+    }
+  }
+
+  .list_item {
+    margin-right: 5px;
+    margin-left: 5px;
+    padding-right: 0;
+    padding-left: 0;
+
+    a {
+      display: inline-flex;
+
+      padding-top: 9px;
+      padding-right: 5px;
+      padding-bottom: 9px;
+      padding-left: 5px;
+    }
+  }
+}

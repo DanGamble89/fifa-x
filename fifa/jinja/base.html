@@ -13,35 +13,39 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
 
+    {# Roboto font import #}
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700italic,700' rel='stylesheet' type='text/css'>
+
+    {# Font Awesome #}
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+
     {% block extra_styles %}{% endblock %}
     {% block head_js %}{% endblock %}
 
     <!--[if lt IE 9]>
-            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
   </head>
 
   <body class="{% block body_class %}{% endblock body_class %}">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <nav>
-            <ul>
-              <li><a href="{{ url('clubs:list') }}">Clubs</a></li>
-              <li><a href="{{ url('leagues:list') }}">Leagues</a></li>
-              <li><a href="{{ url('nations:list') }}">Nations</a></li>
-              <li><a href="{{ url('players:list') }}">Players</a></li>
-            </ul>
-          </nav>
-        </div>
-
-        <div class="col-md-12">
-          {% block primary_content %}
-            Hey :)
-          {% endblock primary_content %}
-        </div>
+    <header class="base_header">
+      <div class="container">
+        <nav>
+          <ul class="[ list list-nav list-inline is-reversed ]">
+            <li class="list_item"><a href="{{ url('clubs:list') }}">Clubs</a></li>
+            <li class="list_item"><a href="{{ url('leagues:list') }}">Leagues</a></li>
+            <li class="list_item"><a href="{{ url('nations:list') }}">Nations</a></li>
+            <li class="list_item"><a href="{{ url('players:list') }}">Players</a></li>
+          </ul>
+        </nav>
       </div>
+    </header>
+
+    <div class="container">
+      {% block primary_content %}
+        Hey :)
+      {% endblock primary_content %}
     </div>
 
     {% block end_js %}{% endblock %}
