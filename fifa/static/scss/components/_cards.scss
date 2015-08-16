@@ -36,6 +36,7 @@
   /* ---------------- /
   Non rare
   / ---------------- */
+  &.is-bronze { background-position: 0 0; }
   &.is-silver { background-position: 0 -1040px; }
   &.is-gold { background-position: 0 -1300px; }
 
@@ -52,6 +53,7 @@
   TOTW
   / ---------------- */
   &.is-totw {
+    &.is-bronze { background-position: 0 0; }
     &.is-silver { background-position: 0 -260px; }
     &.is-gold { background-position: 0 -520px; }
   }
@@ -60,6 +62,8 @@
   TOTS
   / ---------------- */
   &.is-tots {
+    &.is-bronze { background-position: 0 -2860px; }
+    &.is-silver { background-position: 0 -3120px; }
     &.is-gold { background-position: 0 -3380px; }
   }
 
@@ -77,6 +81,26 @@
   EA Sports
   / ---------------- */
   &.is-easports { background-position: 0 -1560px; }
+
+  /* ---------------- /
+  Legend
+  / ---------------- */
+  &.is-legend { background-position: 0 -1560px; }
+
+  /* ---------------- /
+  Purple
+  / ---------------- */
+  &.is-purple { background-position: 0 -1040px; }
+
+  /* ---------------- /
+  Green
+  / ---------------- */
+  &.is-green { background-position: 0 -1820px; }
+
+  /* ---------------- /
+  Pink
+  / ---------------- */
+  &.is-pink { background-position: 0 -2340px; }
 }
 
 /*****************************************************************************/
