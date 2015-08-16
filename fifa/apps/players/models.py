@@ -221,3 +221,27 @@ class Player(TimeStampedModel, EaModel):
 
         return today.year - self.birthdate.year - (
             (today.month, today.day) < (self.birthdate.month, self.birthdate.day))
+
+    def card_class(self):
+        card_class = ''
+        color_classes = {
+            ' is-bronze': ['bronze', 'rare_bronze', 'totw_bronze', 'tots_bronze'],
+            ' is-silver': ['silver', 'rare_silver', 'totw_silver', 'tots_silver'],
+            ' is-gold': ['gold', 'rare_gold', 'totw_gold', 'tots_gold'],
+            ' is-rare': ['rare_bronze', 'rare_silver', 'rare_gold'],
+            ' is-totw': ['totw_bronze', 'totw_silver', 'totw_gold'],
+            ' is-tots': ['tots_bronze', 'tots_silver', 'tots_gold'],
+            ' is-toty': 'toty',
+            ' is-motm': 'motm',
+            ' is-easports': 'easports',
+            ' is-purple': 'purple',
+            ' is-green': 'green',
+            ' is-pink': 'pink',
+            ' is-legend': 'legend'
+        }
+
+        for css_class, color in color_classes.items():
+            if self.color in color:
+                card_class += css_class
+
+        return card_class.lstrip()
