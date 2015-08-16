@@ -100,23 +100,7 @@
   {% endif %}
 
   {% for player in players %}
-    <ul>
-      <li>
-        <a href="{{ url('players:player', kwargs={'slug': player.slug}) }}">{{ player }} - {{ player.overall_rating }} - {{ player.position_line }}</a>
-      </li>
-
-      <li>
-        <a href="{{ url(url_namespace, kwargs={'slug': player.nation.slug}) }}">{{ player.nation }}</a>
-      </li>
-
-      <li>
-        <a href="{{ url('leagues:league', kwargs={'slug': player.league.slug}) }}">{{ player.league }}</a>
-      </li>
-
-      <li>
-        <a href="{{ url('clubs:club', kwargs={'slug': player.club.slug}) }}">{{ player.club }}</a>
-      </li>
-    </ul>
+    {% include 'players/card.html' %}
   {% else %}
     There are no players!
   {% endfor %}

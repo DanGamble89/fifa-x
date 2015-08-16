@@ -1,0 +1,213 @@
+/*****************************************************************************/
+/* Base */
+/*****************************************************************************/
+.card {
+  height: 260px;
+  padding-top: 16px;
+  padding-right: 23px;
+  padding-bottom: 31px;
+  padding-left: 23px;
+  width: 183px;
+
+  font-size: 16px;
+
+  color: #fff;
+
+  &.is-bronze,
+  &.is-silver,
+  &.is-gold,
+  &.is-legend {
+    background-image: url('/static/img/cardsSmall-base.png');
+  }
+
+  &.is-totw,
+  &.is-tots,
+  &.is-toty,
+  &.is-motm,
+  &.is-easports,
+  &.is-purple,
+  &.is-green,
+  &.is-pink {
+    background-image: url('/static/img/cardSsmall-special.png');
+  }
+
+  /* ---------------- /
+  Non rare
+  / ---------------- */
+  &.is-silver { background-position: 0 -1040px; }
+  &.is-gold { background-position: 0 -1300px; }
+
+  /* ---------------- /
+  Rare
+  / ---------------- */
+  &.is-rare {
+    &.is-bronze { background-position: 0 -260px; }
+    &.is-silver { background-position: 0 -520px; }
+    &.is-gold { background-position: 0 -780px; }
+  }
+
+  /* ---------------- /
+  TOTW
+  / ---------------- */
+  &.is-totw {
+    &.is-silver { background-position: 0 -260px; }
+    &.is-gold { background-position: 0 -520px; }
+  }
+
+  /* ---------------- /
+  TOTS
+  / ---------------- */
+  &.is-tots {
+    &.is-gold { background-position: 0 -3380px; }
+  }
+
+  /* ---------------- /
+  TOTY
+  / ---------------- */
+  &.is-toty { background-position: 0 -1300px; }
+
+  /* ---------------- /
+  MOTM
+  / ---------------- */
+  &.is-motm { background-position: 0 -2080px; }
+
+  /* ---------------- /
+  EA Sports
+  / ---------------- */ 
+  &.is-easports { background-position: 0 -1560px; }
+}
+
+/*****************************************************************************/
+/* Header */
+/*****************************************************************************/
+.card_header {
+  display: flex;
+  flex-wrap: wrap;
+
+  margin-bottom: 2px;
+}
+
+.card_rating,
+.card_position {
+  align-self: baseline;
+}
+
+/* ---------------- /
+Name
+/ ---------------- */
+.card_name {
+  margin-bottom: 2px;
+  width: 100%;
+
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ---------------- /
+Rating
+/ ---------------- */
+.card_rating {
+  margin-right: 7px;
+  padding-right: 7px;
+
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* ---------------- /
+Position
+/ ---------------- */
+.card_position {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/*****************************************************************************/
+/* Images */
+/*****************************************************************************/
+.card_images {
+  display: flex;
+
+  height: 76px;
+}
+
+.card_imagesLeft,
+.card_imagesRight {
+  display: flex;
+}
+
+/* ---------------- /
+Left images
+/ ---------------- */
+.card_imagesLeft {
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card_imgClub {
+  margin-bottom: 5px;
+}
+
+/* ---------------- /
+Right images
+/ ---------------- */
+.card_imagesRight {
+  align-items: flex-end;
+
+  margin-right: -11px;
+  margin-left: auto;
+}
+
+/*****************************************************************************/
+/* Builder */
+/*****************************************************************************/
+.card_builder {
+  display: flex;
+  justify-content: space-around;
+
+  height: 26px;
+
+  line-height: 26px;
+}
+
+/* ---------------- /
+Chemistry
+/ ---------------- */
+.card_chemistry {
+}
+
+/*****************************************************************************/
+/* Stats */
+/*****************************************************************************/
+.card_stats {
+  display: flex;
+  justify-content: space-around;
+
+  height: 24px * 3;
+}
+
+.card_statsLeft {
+  padding-left: 5px;
+}
+
+.card_statsRight {
+  padding-right: 5px;
+}
+
+.card_stat {
+  height: 24px;
+
+  line-height: 22px;
+
+  &:last-child {
+    line-height: 20px;
+  }
+
+  .stat {
+    font-weight: 700;
+  }
+}
