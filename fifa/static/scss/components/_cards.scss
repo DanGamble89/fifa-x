@@ -31,6 +31,8 @@
     background-image: url('/static/img/cardSsmall-special.png');
   }
 
+  // TODO: Finish off the colours
+
   /* ---------------- /
   Non rare
   / ---------------- */
@@ -73,7 +75,7 @@
 
   /* ---------------- /
   EA Sports
-  / ---------------- */ 
+  / ---------------- */
   &.is-easports { background-position: 0 -1560px; }
 }
 
