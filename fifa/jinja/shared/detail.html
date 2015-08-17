@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% import 'macros/pagination.html' as pagination with context %}
+{% import 'players/macros/players.html' as player_macros with context %}
 
 {% block control_strip %}
   <div class="filters [ list list-inline ]">
@@ -99,11 +100,7 @@
     Clubs: {% for club in object.club_set.all() %}<a href="{{ url('clubs:club', kwargs={'slug': club.slug}) }}">{{ club }}</a>{% endfor %}
   {% endif %}
 
-  {% for player in players %}
-    {% include 'players/card.html' %}
-  {% else %}
-    There are no players!
-  {% endfor %}
+  {{ player_macros.players_list(players) }}
 
   {{ pagination.pagination(players) }}
 

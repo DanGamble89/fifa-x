@@ -1,0 +1,9 @@
+{% macro players_list(players) %}
+  <div class="cards">
+    {% for player in players %}
+      {% include 'players/card.html' %}
+    {% else %}
+      There are no players!
+    {% endfor %}
+  </div>
+{% endmacro %}
