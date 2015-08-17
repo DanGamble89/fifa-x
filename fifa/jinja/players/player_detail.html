@@ -3,4 +3,48 @@
 
 {% block primary_content %}
   {{ player_card.card(player) }}
+
+  <ul>
+    <li>Club: {{ player.club }}</li>
+    <li>League: {{ player.league }}</li>
+    <li>Nation: {{ player.nation }}</li>
+
+    <li>Source: {{ player.player_type|capitalize }}</li>
+  </ul>
+
+  <ul>
+    {% for label, stat in player.pace_stats() %}
+      <li>{{ label|capitalize }} - {{ stat }}</li>
+    {% endfor %}
+  </ul>
+
+  <ul>
+    {% for label, stat in player.shooting_stats() %}
+      <li>{{ label|capitalize }} - {{ stat }}</li>
+    {% endfor %}
+  </ul>
+
+  <ul>
+    {% for label, stat in player.passing_stats() %}
+      <li>{{ label|capitalize }} - {{ stat }}</li>
+    {% endfor %}
+  </ul>
+
+  <ul>
+    {% for label, stat in player.dribbling_stats() %}
+      <li>{{ label|capitalize }} - {{ stat }}</li>
+    {% endfor %}
+  </ul>
+
+  <ul>
+    {% for label, stat in player.defending_stats() %}
+      <li>{{ label|capitalize }} - {{ stat }}</li>
+    {% endfor %}
+  </ul>
+
+  <ul>
+    {% for label, stat in player.physicality_stats() %}
+      <li>{{ label|capitalize }} - {{ stat }}</li>
+    {% endfor %}
+  </ul>
 {% endblock %}

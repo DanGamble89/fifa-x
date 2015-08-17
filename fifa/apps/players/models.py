@@ -245,3 +245,105 @@ class Player(TimeStampedModel, EaModel):
                 card_class += css_class
 
         return card_class.lstrip()
+
+    def gk_stats(self):
+        return (
+            (self._meta.get_field('gk_diving').verbose_name, self.gk_diving),
+            (self._meta.get_field('gk_handling').verbose_name, self.gk_handling),
+            (self._meta.get_field('gk_kicking').verbose_name, self.gk_kicking),
+            (self._meta.get_field('gk_reflex').verbose_name, self.gk_reflex),
+            (self._meta.get_field('acceleration').verbose_name, self.acceleration),
+            (self._meta.get_field('gk_positioning').verbose_name, self.gk_positioning),
+        )
+
+    def pace_stats(self):
+        return (
+            (self._meta.get_field('acceleration').verbose_name, self.acceleration),
+            (self._meta.get_field('sprint_speed').verbose_name, self.sprint_speed),
+        )
+
+    def dribbling_stats(self):
+        return (
+            (self._meta.get_field('agility').verbose_name, self.agility),
+            (self._meta.get_field('balance').verbose_name, self.balance),
+            (self._meta.get_field('reactions').verbose_name, self.reactions),
+            (self._meta.get_field('ball_control').verbose_name, self.ball_control),
+            (self._meta.get_field('dribbling').verbose_name, self.dribbling),
+        )
+
+    def shooting_stats(self):
+        return (
+            (self._meta.get_field('positioning').verbose_name, self.positioning),
+            (self._meta.get_field('finishing').verbose_name, self.finishing),
+            (self._meta.get_field('shot_power').verbose_name, self.shot_power),
+            (self._meta.get_field('long_shots').verbose_name, self.long_shots),
+            (self._meta.get_field('volleys').verbose_name, self.volleys),
+            (self._meta.get_field('penalties').verbose_name, self.penalties),
+        )
+
+    def defending_stats(self):
+        return (
+            (self._meta.get_field('interceptions').verbose_name, self.interceptions),
+            (self._meta.get_field('heading_accuracy').verbose_name, self.heading_accuracy),
+            (self._meta.get_field('marking').verbose_name, self.marking),
+            (self._meta.get_field('standing_tackle').verbose_name, self.standing_tackle),
+            (self._meta.get_field('sliding_tackle').verbose_name, self.sliding_tackle),
+        )
+
+    def passing_stats(self):
+        return (
+            (self._meta.get_field('vision').verbose_name, self.vision),
+            (self._meta.get_field('crossing').verbose_name, self.crossing),
+            (self._meta.get_field('free_kick_accuracy').verbose_name, self.free_kick_accuracy),
+            (self._meta.get_field('short_passing').verbose_name, self.short_passing),
+            (self._meta.get_field('long_passing').verbose_name, self.long_passing),
+            (self._meta.get_field('curve').verbose_name, self.curve),
+        )
+
+    def physicality_stats(self):
+        return (
+            (self._meta.get_field('jumping').verbose_name, self.jumping),
+            (self._meta.get_field('stamina').verbose_name, self.stamina),
+            (self._meta.get_field('strength').verbose_name, self.strength),
+            (self._meta.get_field('aggression').verbose_name, self.aggression),
+        )
+
+    def skill_stats(self):
+        return (
+            (self._meta.get_field('ball_control').verbose_name, self.ball_control),
+            (self._meta.get_field('crossing').verbose_name, self.crossing),
+            (self._meta.get_field('curve').verbose_name, self.curve),
+            (self._meta.get_field('dribbling').verbose_name, self.dribbling),
+            (self._meta.get_field('finishing').verbose_name, self.finishing),
+            (self._meta.get_field('free_kick_accuracy').verbose_name, self.free_kick_accuracy),
+            (self._meta.get_field('heading_accuracy').verbose_name, self.heading_accuracy),
+            (self._meta.get_field('long_passing').verbose_name, self.long_passing),
+            (self._meta.get_field('long_shots').verbose_name, self.long_shots),
+            (self._meta.get_field('marking').verbose_name, self.marking),
+            (self._meta.get_field('penalties').verbose_name, self.penalties),
+            (self._meta.get_field('short_passing').verbose_name, self.short_passing),
+            (self._meta.get_field('shot_power').verbose_name, self.shot_power),
+            (self._meta.get_field('sliding_tackle').verbose_name, self.sliding_tackle),
+            (self._meta.get_field('standing_tackle').verbose_name, self.standing_tackle),
+            (self._meta.get_field('volleys').verbose_name, self.volleys),
+        )
+
+    def physical_stats(self):
+        return (
+            (self._meta.get_field('acceleration').verbose_name, self.acceleration),
+            (self._meta.get_field('agility').verbose_name, self.agility),
+            (self._meta.get_field('balance').verbose_name, self.balance),
+            (self._meta.get_field('jumping').verbose_name, self.jumping),
+            (self._meta.get_field('reactions').verbose_name, self.reactions),
+            (self._meta.get_field('sprint_speed').verbose_name, self.sprint_speed),
+            (self._meta.get_field('stamina').verbose_name, self.stamina),
+            (self._meta.get_field('strength').verbose_name, self.strength),
+        )
+
+    def mental_stats(self):
+        return (
+            (self._meta.get_field('aggression').verbose_name, self.aggression),
+            (self._meta.get_field('positioning').verbose_name, self.positioning),
+            (self._meta.get_field('interceptions').verbose_name, self.interceptions),
+            (self._meta.get_field('vision').verbose_name, self.vision)
+        )
