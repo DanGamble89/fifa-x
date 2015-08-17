@@ -116,6 +116,8 @@ INSTALLED_APPS = (
 
     'django.contrib.admin',
 
+    'cachalot',
+
     'fifa.apps.blog',
     'fifa.apps.builder',
     'fifa.apps.clubs',

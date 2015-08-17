@@ -13,10 +13,18 @@ ul[class] {
 /*****************************************************************************/
 .list-inline {
   display: flex;
+  flex-wrap: wrap;
 
   &.is-reversed {
     flex-direction: row-reverse;
   }
+
+  /* ---------------- /
+  Two columns
+  / ---------------- */
+  &.has-twoCol   .list_item { width: percentage(1/2); }
+  &.has-threeCol .list_item { width: percentage(1/3); }
+  &.has-fourCol  .list_item { width: percentage(1/4); }
 }
 
 /*****************************************************************************/
