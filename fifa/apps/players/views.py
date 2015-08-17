@@ -80,3 +80,8 @@ class PlayerList(ListView, FormMixin):
 
 class PlayerDetail(DetailView):
     model = Player
+
+    def get_queryset(self):
+        return super(PlayerDetail, self).get_queryset().select_related(
+            'club', 'league', 'nation'
+        )
