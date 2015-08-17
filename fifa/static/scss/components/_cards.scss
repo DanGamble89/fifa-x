@@ -1,5 +1,13 @@
 /*****************************************************************************/
-/* Base */
+/* Cards */
+/*****************************************************************************/
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/*****************************************************************************/
+/* Card */
 /*****************************************************************************/
 .card {
   height: 260px;
@@ -13,7 +21,10 @@
 
   color: #fff;
 
-  &.is-bronze,
+  // Order is important here, the 1st shadow only applies to non rare cards
+  &.is-bronze, &.is-silver, &.is-gold, &.is-legend { text-shadow: 0 1px 0 rgba(255, 255, 255, .5); }
+  &.is-rare, &.is-totw, &.is-tots                  { text-shadow: 0 1px 0 rgba(24, 24, 24, .36);   }
+
   &.is-silver,
   &.is-gold,
   &.is-legend {
@@ -31,8 +42,9 @@
     background-image: url('/static/img/cardSsmall-special.png');
   }
 
-  // TODO: Finish off the colours
-
+  /***************************************************************************/
+  /* Backgrounds */
+  /***************************************************************************/
   /* ---------------- /
   Non rare
   / ---------------- */
@@ -101,6 +113,50 @@
   Pink
   / ---------------- */
   &.is-pink { background-position: 0 -2340px; }
+
+  /***************************************************************************/
+  /* Text colors */
+  /***************************************************************************/
+  /* ---------------- /
+  Dark gold text
+  / ---------------- */
+  &.is-legend { color: #9e7f00; }
+
+  /* ---------------- /
+  Gold text
+  / ---------------- */
+  &.is-totw,
+  &.is-toty {
+    &.is-bronze { color: #c5a692; }
+    &.is-silver{ color: #d6d6d6; }
+    &.is-gold { color: #dfb334; }
+  }
+
+  /* ---------------- /
+  Black text
+  / ---------------- */
+  &.is-bronze,
+  &.is-silver,
+  &.is-gold { color: #282828; }
+
+  /* ---------------- /
+  White text
+  / ---------------- */
+  &.is-rare {
+    &.is-bronze,
+    &.is-silver,
+    &.is-gold { color: #fff; }
+  }
+  &.is-toty,
+  &.is-motm,
+  &.is-green,
+  &.is-pink,
+  &.is-purple { color: #fff; }
+
+  /* ---------------- /
+  Salmon text
+  / ---------------- */
+  &.is-easports { color: #c5a692; }
 }
 
 /*****************************************************************************/

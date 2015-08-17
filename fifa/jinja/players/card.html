@@ -1,4 +1,4 @@
-<div class="card is-small {{ player.card_class() }}">
+<a class="card is-small {{ player.card_class() }}" href="{{ url('players:player', kwargs={'slug': player.slug}) }}">
   <header class="card_header">
     <div class="card_name">{{ player.common_name }}</div>
     <div class="card_rating">{{ player.overall_rating }}</div>
@@ -34,4 +34,4 @@
       <div class="card_stat"><span class="stat">{{ player.card_att_6 }}</span> <span class="label">PHY</span></div>
     </div>
   </section>
-</div>
+</a>
