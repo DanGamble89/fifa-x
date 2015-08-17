@@ -11,6 +11,9 @@
 /* Card */
 /*****************************************************************************/
 .card {
+  display: flex;
+  flex-direction: column;
+
   height: 260px;
   padding-top: 16px;
   padding-right: 23px;
