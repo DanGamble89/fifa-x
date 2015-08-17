@@ -1,0 +1,45 @@
+{% macro card(player) %}
+  <a class="card is-small {{ player.card_class() }}" href="{{ url('players:player', kwargs={'slug': player.slug}) }}">
+    <header class="card_header">
+      <div class="card_name">{{ player.common_name }}</div>
+      <div class="card_rating">{{ player.overall_rating }}</div>
+      <div class="card_position">{{ player.position }}</div>
+    </header>
+
+    <section class="card_images">
+      <div class="card_imagesLeft">
+        <img alt="" src="{{ player.club.image_medium }}" class="card_imgClub" height="31" width="31">
+        <img alt="" src="{{ player.nation.image_medium }}" class="card_imgNation" height="23" width="37">
+      </div>
+
+      <div class="card_imagesRight">
+        <img alt="" src="{{ player.image_medium }}" class="card_imgPlayer" height="92" width="92">
+      </div>
+    </section>
+
+    <section class="card_builder">
+      <div class="card_workrates">M/L</div>
+      <div class="card_chemistry">CHE: 3</div>
+    </section>
+
+    <section class="card_stats">
+      <div class="card_statsLeft">
+        <div class="card_stat"><span class="stat">{{ player.card_att_1 }}</span>
+          <span class="label">PAC</span></div>
+        <div class="card_stat"><span class="stat">{{ player.card_att_2 }}</span>
+          <span class="label">SHO</span></div>
+        <div class="card_stat"><span class="stat">{{ player.card_att_3 }}</span>
+          <span class="label">PAS</span></div>
+      </div>
+
+      <div class="card_statsRight">
+        <div class="card_stat"><span class="stat">{{ player.card_att_4 }}</span>
+          <span class="label">DRI</span></div>
+        <div class="card_stat"><span class="stat">{{ player.card_att_5 }}</span>
+          <span class="label">DEF</span></div>
+        <div class="card_stat"><span class="stat">{{ player.card_att_6 }}</span>
+          <span class="label">PHY</span></div>
+      </div>
+    </section>
+  </a>
+{% endmacro %}

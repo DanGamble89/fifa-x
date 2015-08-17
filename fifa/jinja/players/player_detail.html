@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
+{% import 'cards/macros/player.html' as player_card %}
 
 {% block primary_content %}
-  {{ player }}
+  {{ player_card.card(player) }}
 {% endblock %}
