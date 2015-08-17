@@ -47,4 +47,38 @@
       <li>{{ label|capitalize }} - {{ stat }}</li>
     {% endfor %}
   </ul>
+
+  <ul>
+    <li>Age: {{ player.age() }}</li>
+    <li>Height: {{ player.height }}cm | {{ player.height|height_imperial }}</li>
+    <li>Weight: {{ player.weight }}</li>
+    <li>Position: {{ player.position }}</li>
+    <li>ATT Workrate: {{ player.workrate_att }}</li>
+    <li>DEF Workrate: {{ player.workrate_def }}</li>
+    <li>Skill moves: {{ '<i class="fa fa-star"></i>'|safe * player.skill }}</li>
+    <li>Skill moves: {{ '<i class="fa fa-star"></i>'|safe * player.weak_foot }}</li>
+  </ul>
+
+  <ul>
+    <li>
+      Traits:
+
+      <ul>
+        {% for trait in player.traits %}
+          <li>{{ trait }}</li>
+        {% endfor %}
+      </ul>
+    </li>
+
+    <li>
+      Specialities:
+
+      <ul>
+        {% for speciality in player.specialities %}
+          <li>{{ speciality }}</li>
+        {% endfor %}
+      </ul>
+    </li>
+  </ul>
+
 {% endblock %}
