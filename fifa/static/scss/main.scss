@@ -19,13 +19,14 @@
 /*****************************************************************************/
 /* Base */
 /*****************************************************************************/
-@import "components/cards";
-@import "components/control-strip";
-@import "components/filters";
-@import "components/lists";
-@import "components/typography";
+@import "base/layout";
 
 /*****************************************************************************/
 /* Components */
 /*****************************************************************************/
+@import "components/cards";
+@import "components/control-strip";
+@import "components/filters";
 @import "components/header";
+@import "components/lists";
+@import "components/typography";

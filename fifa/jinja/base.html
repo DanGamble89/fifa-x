@@ -30,7 +30,7 @@
   </head>
 
   <body class="{% block body_class %}{% endblock body_class %}">
-    <header class="base_header">
+    <header class="headerStrip">
       <div class="container">
         <nav>
           <ul class="[ list list-nav list-inline is-reversed ]">
@@ -49,10 +49,12 @@
       </div>
     </div>
 
-    <div class="container">
-      {% block primary_content %}
-        Hey :)
-      {% endblock primary_content %}
+    <div class="mainContent">
+      <div class="container">
+        {% block primary_content %}
+          Hey :)
+        {% endblock primary_content %}
+      </div>
     </div>
 
     {% block end_js %}{% endblock %}
