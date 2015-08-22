@@ -2,7 +2,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.utils.text import slugify
 from django.views.generic import DetailView
 
-from .players.models import Player, PLAYER_HELPERS
+from .players.models import Player, PLAYER_HELPERS, PLAYER_POSITION_LINE_CHOICES
 from .players.forms import PlayersFilterForm
 
 
@@ -46,7 +46,7 @@ class ObjectDetailView(DetailView):
         position_group = get_filters.pop('group', '')
 
         if position_group:
-            filters['position__in'] = position_group.upper().split('-')
+            get_filters['position__in'] = position_group.upper().split('-')
 
         # These are for ordering by, not filtering
         sort_by = get_filters.pop('sort', '')
@@ -75,11 +75,15 @@ class ObjectDetailView(DetailView):
             **get_filters
         )
 
+        # Rename to key so it can be removed form the url in the template
+        get_filters['group'] = get_filters.pop('position__in')
+
         context.update({
             'players': self.pagination(players),
             'player_instance': PLAYER_HELPERS,
             'sort_filters': sort_filters,
-            'url_namespace': '{}:{}'.format('{}s'.format(model_name), model_name).lower()
+            'url_namespace': '{}:{}'.format('{}s'.format(model_name), model_name).lower(),
+            'get_filters': get_filters
         })
 
         return context

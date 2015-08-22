@@ -90,6 +90,15 @@
   {{ object.player_count_silver }}
   {{ object.player_count_bronze }}
 
+  <ul class="list list-inline">
+    <li class="list_item">Filters</li>
+
+    {% for k, v in get_filters.items() %}
+      <li class="list_item"><a href="{{ url(url_namespace, request=request.GET, remove=[k], kwargs={'slug': object.slug}) }}">{{ v }}</a></li>
+    {% endfor %}
+
+  </ul>
+
   {% if object.nation %}
     Nation: <a href="{{ url('nations:nation', kwargs={'slug': object.nation.slug}) }}">{{ object.nation }}</a>
   {% elif object.league %}
