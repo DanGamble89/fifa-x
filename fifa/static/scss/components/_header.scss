@@ -2,5 +2,26 @@
 /* Base header */
 /*****************************************************************************/
 .headerStrip {
-  border-bottom: 1px solid #ececec;
+  display: flex;
+  align-items: center;
+
+  height: 60px;
+
+  color: #a8a8a8;
+
+  .container {
+    flex: 1;
+  }
+}
+
+.headerStrip_nav {
+  display: inline-flex;
+
+  &.from-right {
+    float: right;
+  }
+
+  a {
+    color: inherit;
+  }
 }

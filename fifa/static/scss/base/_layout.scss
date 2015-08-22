@@ -2,7 +2,23 @@
 /* Base */
 /*****************************************************************************/
 body {
-  background-color: #eee;
+  position: relative;
+
+  background-color: #fff;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+
+    display: block;
+    height: 380px;
+
+    background-color: #0d0d0d;
+  }
 }
 
 .mainContent {

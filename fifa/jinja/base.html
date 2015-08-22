@@ -27,17 +27,50 @@
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
+    <script>
+      (function (d) {
+        var config = {
+              kitId: 'uid8ndh',
+              scriptTimeout: 3000,
+              async: true
+            },
+            h = d.documentElement, t = setTimeout(function () {h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive";}, config.scriptTimeout), tk = d.createElement("script"), f = false, s = d.getElementsByTagName("script")[0], a;
+        h.className += " wf-loading";
+        tk.src = '//use.typekit.net/' + config.kitId + '.js';
+        tk.async = true;
+        tk.onload = tk.onreadystatechange = function () {
+          a = this.readyState;
+          if (f || a && a != "complete" && a != "loaded")return;
+          f = true;
+          clearTimeout(t);
+          try {Typekit.load(config)} catch (e) {}
+        };
+        s.parentNode.insertBefore(tk, s)
+      })(document);
+    </script>
+
   </head>
 
   <body class="{% block body_class %}{% endblock body_class %}">
     <header class="headerStrip">
       <div class="container">
-        <nav>
-          <ul class="[ list list-nav list-inline is-reversed ]">
+        <nav class="headerStrip_nav from-left">
+          <ul class="[ list list-nav list-inline ]">
+            <li class="list_item"><a href="{{ url('players:list') }}">Players</a></li>
             <li class="list_item"><a href="{{ url('clubs:list') }}">Clubs</a></li>
             <li class="list_item"><a href="{{ url('leagues:list') }}">Leagues</a></li>
             <li class="list_item"><a href="{{ url('nations:list') }}">Nations</a></li>
+            <li class="list_item"><a href="{{ url('nations:list') }}">Squads</a></li>
+          </ul>
+        </nav>
+
+        <nav class="headerStrip_nav from-right">
+          <ul class="[ list list-nav list-inline is-reversed ]">
             <li class="list_item"><a href="{{ url('players:list') }}">Players</a></li>
+            <li class="list_item"><a href="{{ url('clubs:list') }}">Clubs</a></li>
+            <li class="list_item"><a href="{{ url('leagues:list') }}">Leagues</a></li>
+            <li class="list_item"><a href="{{ url('nations:list') }}">Nations</a></li>
+            <li class="list_item"><a href="{{ url('nations:list') }}">Squads</a></li>
           </ul>
         </nav>
       </div>
