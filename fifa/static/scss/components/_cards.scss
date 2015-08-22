@@ -36,6 +36,7 @@
   &.is-bronze, &.is-silver, &.is-gold, &.is-legend { text-shadow: 0 1px 0 rgba(255, 255, 255, .5); }
   &.is-rare, &.is-totw, &.is-tots                  { text-shadow: 0 1px 0 rgba(24, 24, 24, .36);   }
 
+  &.is-bronze,
   &.is-silver,
   &.is-gold,
   &.is-legend {
