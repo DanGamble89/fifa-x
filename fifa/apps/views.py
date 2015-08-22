@@ -76,7 +76,8 @@ class ObjectDetailView(DetailView):
         )
 
         # Rename to key so it can be removed form the url in the template
-        get_filters['group'] = get_filters.pop('position__in')
+        if position_group:
+            get_filters['group'] = get_filters.pop('position__in')
 
         context.update({
             'players': self.pagination(players),
