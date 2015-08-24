@@ -42,6 +42,10 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
+WEBPACK_LOADER = {
+    'BUNDLE_DIR_NAME': 'bundles/',
+    'STATS_FILE': os.path.join(BASE_DIR, '../webpack-stats.json')
+}
 
 # Note: This key should only be used for development and testing.
 SECRET_KEY = r"ur97rr4qrrv&fz7egjn7vx#ohgb-r6thho%qn#v#t!@fez507u"
@@ -56,6 +60,10 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'environment': 'fifa.jinja2.environment',
+            'extensions': [
+                "django_jinja.builtins.extensions.DjangoFiltersExtension",
+                "webpack_loader.contrib.jinja2ext.WebpackExtension",
+            ]
         }
     },
     {
@@ -117,6 +125,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     # 'cachalot',
+    'webpack_loader',
 
     'fifa.apps.blog',
     'fifa.apps.builder',

@@ -30,38 +30,23 @@ export default () => {
     .pipe($.sourcemaps.init())
 
     // Process our SCSS to CSS
-    .pipe($.sass({
-      precision: 10,
-      stats: true,
-      includePaths: ['node_modules/bootstrap-sass/assets/stylesheets']
-    }).on('error', $.sass.logError))
+    .pipe($.sass())
 
     // PostCSS our vendor prefixes
-    .pipe($.autoprefixer(autoprefixerBrowsers))
+    // .pipe($.autoprefixer(autoprefixerBrowsers))
 
     // Convert viable px units to REM
-    .pipe($.pxtorem())
-
-    // Place our compiled CSS in a tmp folder
-    .pipe(gulp.dest('.tmp'))
-
-    // Minify our CSS in the temp folder
-    .pipe($.if('*.css', $.minifyCss()))
+    // .pipe($.pxtorem())
 
     // Write our source map, the root is needed for Django funnyness
-    .pipe($.sourcemaps.write('./', {
-      includeContent: false,
-      sourceRoot: () => {
-        return '../../static'
-      }
-    }))
+    .pipe($.sourcemaps.write())
 
     // Place our CSS in the location we link to
-    .pipe(gulp.dest(config.css.path))
+    .pipe(gulp.dest(config.css.path));
 
     // Stream the changes to Browser Sync
-    .pipe(browserSync.stream({match: '**/*.css'}))
+    // .pipe(browserSync.stream({match: '**/*.css'}))
 
     // Spit out the size to the console
-    .pipe($.size({title: 'styles'}));
+    // .pipe($.size({title: 'styles'}));
 }
