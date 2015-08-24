@@ -192,7 +192,7 @@ class Player(TimeStampedModel, EaModel):
     card_att_4 = models.PositiveIntegerField()
     card_att_5 = models.PositiveIntegerField()
     card_att_6 = models.PositiveIntegerField()
-    overall_rating = models.PositiveIntegerField()
+    overall_rating = models.PositiveIntegerField(db_index=True)
 
     # Misc
     ea_id_unique = models.CharField(max_length=255)
