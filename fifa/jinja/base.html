@@ -79,6 +79,14 @@
     </header>
 
     <div class="mainContent">
+      <div class="darkStrip">
+        <div class="container">
+          {% block darkStrip %}
+
+          {% endblock %}
+        </div>
+      </div>
+
       <div class="controlStrip">
         <div class="container">
           {% block control_strip %}{% endblock %}
