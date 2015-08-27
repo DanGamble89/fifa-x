@@ -30,8 +30,7 @@ def environment(**options):
         'static': staticfiles_storage.url,
         # 'url': reverse,
         'url': build_url,
-        'dj': defaultfilters,
-        'render_bundle': render_bundle
+        'dj': defaultfilters
     })
 
     return env
