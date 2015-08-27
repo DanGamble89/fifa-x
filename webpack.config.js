@@ -3,7 +3,7 @@ var webpack = require('webpack');
 var BundleTracker = require('webpack-bundle-tracker');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-cssLoaders = ['style', 'css', 'autoprefixer-loader?browsers=last 2 versions'];
+cssLoaders = ['style', 'css?sourceMap', 'csslint', 'autoprefixer-loader?browsers=last 2 versions'];
 
 module.exports = {
   context: __dirname,
@@ -33,7 +33,7 @@ module.exports = {
       {
         test: /\.scss$/,
         loaders: cssLoaders.concat([
-          'sass?precision=10'
+          'sass?sourceMap?precision=10'
         ])
       },
 //      {
