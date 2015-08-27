@@ -2,9 +2,11 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template import defaultfilters
 
 from jinja2 import Environment
-import math
+from webpack_loader.templatetags.webpack_loader import render_bundle
 
-from fifa.apps.players.views import build_url
+from .apps.players.views import build_url
+
+import math
 
 
 def height_imperial(height, labels=False):
@@ -28,7 +30,8 @@ def environment(**options):
         'static': staticfiles_storage.url,
         # 'url': reverse,
         'url': build_url,
-        'dj': defaultfilters
+        'dj': defaultfilters,
+        'render_bundle': render_bundle
     })
 
     return env

@@ -4,13 +4,13 @@ import os
 from sys import path
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
 SITE_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 SITE_NAME = os.path.basename(BASE_DIR)
 
 # Add our project to our pythonpath, this way we don't need to type our project
 # name in our dotted import paths:
-path.append(BASE_DIR)
+path.append(SITE_ROOT)
 
 
 DEBUG = False
@@ -29,19 +29,23 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
+# MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = os.path.join(SITE_ROOT, 'assets')
+# STATIC_ROOT = os.path.join(SITE_ROOT, 'assets')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(SITE_ROOT, "static"),
 )
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
+WEBPACK_LOADER = {
+    'BUNDLE_DIR_NAME': 'bundles/',
+    'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+}
 
 # Note: This key should only be used for development and testing.
 SECRET_KEY = r"ur97rr4qrrv&fz7egjn7vx#ohgb-r6thho%qn#v#t!@fez507u"
@@ -51,7 +55,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
         'DIRS': [
-            os.path.join(BASE_DIR, 'jinja'),
+            os.path.join(SITE_ROOT, 'jinja'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -117,6 +121,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     # 'cachalot',
+    'webpack_loader',
 
     'fifa.apps.blog',
     'fifa.apps.builder',
