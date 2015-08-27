@@ -20,6 +20,8 @@
     {# Font Awesome #}
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
 
+    {{ render_bundle('main', 'css')|safe }}
+
     {% block extra_styles %}{% endblock %}
     {% block head_js %}{% endblock %}
 
@@ -102,7 +104,7 @@
 
     <div id="react-app"></div>
 
-    {{ render_bundle('main')|safe }}
+    {{ render_bundle('main', 'js')|safe }}
 
     {% block end_js %}{% endblock %}
   </body>
