@@ -31,6 +31,8 @@ urlpatterns = patterns(
 
     # API
     url(r'^api/players/$', PlayerJSONList.as_view(), name="api"),
+
+    url(r'^djangojs/', include('djangojs.urls')),
 )
 
 if settings.DEBUG:

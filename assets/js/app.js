@@ -1,6 +1,39 @@
 import React, { Component, PropTypes } from 'react';
 import $ from 'jquery';
 
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie != '') {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = $.trim(cookies[i]);
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) == (name + '=')) {
+        cookieValue = decodeURIComponent(
+          cookie.substring(name.length + 1)
+        );
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+const csrfToken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+  // HTTP Methods that don't require CSRF protection
+  return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+$.ajaxSetup({
+  beforeSend: function (xhr, settings) {
+    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+      xhr.setRequestHeader('X-CSRFToken', csrfToken);
+    }
+  }
+});
+
 class BaseComponent extends Component {
   /**
    * When using React with ES6 we lose the magical this binding of
@@ -14,6 +47,16 @@ class BaseComponent extends Component {
    */
   _bind(...methods) {
     methods.forEach((method) => this[method] = this[method].bind(this));
+  }
+}
+
+class CSRFToken extends BaseComponent {
+  render() {
+    return React.DOM.input({
+      type: 'hidden',
+      name: 'csrfmiddlewaretoken',
+      value: csrfToken
+    });
   }
 }
 
@@ -83,35 +126,23 @@ class SearchBar extends BaseComponent {
     this._bind('handleChange');
   }
 
-  handleChange() {
-    /**
-     *
-     */
+  handleChange(e) {
     this.props.onUserInput(
-      React.findDOMNode(this.refs.filterTextInput).value,
-      React.findDOMNode(this.refs.inStockOnlyInput).checked
+      React.findDOMNode(this.refs.filterTextInput).value
     );
   }
 
   render() {
     return (
       <form>
+        <CSRFToken />
         <input
+          className={this.props.filterText}
           type="text"
           placeholder="Search..."
           value={this.props.filterText}
           ref="filterTextInput"
           onChange={this.handleChange} />
-
-        <p>
-          <input
-            type="checkbox"
-            checked={this.props.inStockOnly}
-            ref="inStockOnlyInput"
-            onChange={this.handleChange} />
-          {' '}
-          Only show products in stock
-        </p>
       </form>
     )
   }
@@ -123,37 +154,43 @@ class PlayerSearch extends BaseComponent {
 
     this.state = {
       filterText: '',
-      inStockOnly: false,
-      data: []
+      data: [],
+      hasData: false
     };
 
-    this._bind('handleUserInput', 'loadPlayers');
+    this._bind('handleUserInput', 'printState');
   }
 
-  loadPlayers() {
-    $.ajax({
-      url: '/api/players',
-      dataType: 'json',
-      cache: false,
-      success: function (data) {
-        this.setState({data: JSON.parse(data)});
-      }.bind(this),
-      error: function (xhr, status, err) {
-        console.error('/api/players/', status, err.toString());
-      }.bind(this)
-    });
+  printState() {
+    console.log(this.state);
   }
 
-  componentDidMount() {
-    this.loadPlayers();
+  handleUserInput(filterText) {
+    if (filterText.length > 2) {
+      $.ajax({
+        url: '/api/players/',
+        dataType: 'json',
+        type: 'POST',
+        data: {'text': filterText},
+        success: function (data) {
+          this.setState({
+            data: data,
+            hasData: true
+          }, console.log('hey'));
+          console.log('success');
+        }.bind(this),
+        error: function (xhr, status, err) {
+          console.error('/api/players/', status, err.toString());
+        }.bind(this)
+      })
+    } else if(filterText.length == 0) {
+      this.setState({
+        data: []
+      })
+    }
 
-    setInterval(this.loadPlayers, 2000);
-  }
-
-  handleUserInput(filterText, inStockOnly) {
     this.setState({
-      filterText: filterText,
-      inStockOnly: inStockOnly
+      filterText: filterText
     });
   }
 
@@ -162,13 +199,11 @@ class PlayerSearch extends BaseComponent {
       <div>
         <SearchBar
           filterText={this.state.filterText}
-          inStockOnly={this.state.inStockOnly}
           onUserInput={this.handleUserInput} />
 
         <PlayerTable
           players={this.state.data}
-          filterText={this.state.filterText}
-          inStockOnly={this.state.inStockOnly} />
+          filterText={this.state.filterText} />
       </div>
     )
   }

@@ -1,6 +1,7 @@
 import json
 from django.core import serializers
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Q
 from django.http import HttpResponse
 from django.utils.text import slugify
 from django.views.generic import DetailView, View
@@ -98,3 +99,14 @@ class PlayerJSONList(View):
         players = serializers.serialize('json', Player.objects.all()[:28])
 
         return HttpResponse(json.dumps(players))
+
+    def post(self, request, *args, **kwargs):
+        text = request.POST.get('text')
+
+        players = Player.objects.filter(
+            Q(first_name__contains=text) | Q(last_name__contains=text)
+        )
+
+        print(players)
+
+        return HttpResponse(serializers.serialize('json', players))

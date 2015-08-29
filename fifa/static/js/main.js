@@ -23,6 +23,37 @@ var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie != '') {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = _jquery2['default'].trim(cookies[i]);
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) == name + '=') {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+var csrfToken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+  // HTTP Methods that don't require CSRF protection
+  return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
+}
+
+_jquery2['default'].ajaxSetup({
+  beforeSend: function beforeSend(xhr, settings) {
+    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+      xhr.setRequestHeader('X-CSRFToken', csrfToken);
+    }
+  }
+});
+
 var BaseComponent = (function (_Component) {
   _inherits(BaseComponent, _Component);
 
@@ -61,8 +92,31 @@ var BaseComponent = (function (_Component) {
   return BaseComponent;
 })(_react.Component);
 
-var PlayerCategoryRow = (function (_BaseComponent) {
-  _inherits(PlayerCategoryRow, _BaseComponent);
+var CSRFToken = (function (_BaseComponent) {
+  _inherits(CSRFToken, _BaseComponent);
+
+  function CSRFToken() {
+    _classCallCheck(this, CSRFToken);
+
+    _get(Object.getPrototypeOf(CSRFToken.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(CSRFToken, [{
+    key: 'render',
+    value: function render() {
+      return _react2['default'].DOM.input({
+        type: 'hidden',
+        name: 'csrfmiddlewaretoken',
+        value: csrfToken
+      });
+    }
+  }]);
+
+  return CSRFToken;
+})(BaseComponent);
+
+var PlayerCategoryRow = (function (_BaseComponent2) {
+  _inherits(PlayerCategoryRow, _BaseComponent2);
 
   function PlayerCategoryRow() {
     _classCallCheck(this, PlayerCategoryRow);
@@ -88,8 +142,8 @@ var PlayerCategoryRow = (function (_BaseComponent) {
   return PlayerCategoryRow;
 })(BaseComponent);
 
-var PlayerRow = (function (_BaseComponent2) {
-  _inherits(PlayerRow, _BaseComponent2);
+var PlayerRow = (function (_BaseComponent3) {
+  _inherits(PlayerRow, _BaseComponent3);
 
   function PlayerRow() {
     _classCallCheck(this, PlayerRow);
@@ -120,8 +174,8 @@ var PlayerRow = (function (_BaseComponent2) {
   return PlayerRow;
 })(BaseComponent);
 
-var PlayerTable = (function (_BaseComponent3) {
-  _inherits(PlayerTable, _BaseComponent3);
+var PlayerTable = (function (_BaseComponent4) {
+  _inherits(PlayerTable, _BaseComponent4);
 
   function PlayerTable() {
     _classCallCheck(this, PlayerTable);
@@ -182,8 +236,8 @@ var PlayerTable = (function (_BaseComponent3) {
   return PlayerTable;
 })(BaseComponent);
 
-var SearchBar = (function (_BaseComponent4) {
-  _inherits(SearchBar, _BaseComponent4);
+var SearchBar = (function (_BaseComponent5) {
+  _inherits(SearchBar, _BaseComponent5);
 
   function SearchBar(props) {
     _classCallCheck(this, SearchBar);
@@ -195,11 +249,8 @@ var SearchBar = (function (_BaseComponent4) {
 
   _createClass(SearchBar, [{
     key: 'handleChange',
-    value: function handleChange() {
-      /**
-       *
-       */
-      this.props.onUserInput(_react2['default'].findDOMNode(this.refs.filterTextInput).value, _react2['default'].findDOMNode(this.refs.inStockOnlyInput).checked);
+    value: function handleChange(e) {
+      this.props.onUserInput(_react2['default'].findDOMNode(this.refs.filterTextInput).value);
     }
   }, {
     key: 'render',
@@ -207,23 +258,14 @@ var SearchBar = (function (_BaseComponent4) {
       return _react2['default'].createElement(
         'form',
         null,
+        _react2['default'].createElement(CSRFToken, null),
         _react2['default'].createElement('input', {
+          className: this.props.filterText,
           type: 'text',
           placeholder: 'Search...',
           value: this.props.filterText,
           ref: 'filterTextInput',
-          onChange: this.handleChange }),
-        _react2['default'].createElement(
-          'p',
-          null,
-          _react2['default'].createElement('input', {
-            type: 'checkbox',
-            checked: this.props.inStockOnly,
-            ref: 'inStockOnlyInput',
-            onChange: this.handleChange }),
-          ' ',
-          'Only show products in stock'
-        )
+          onChange: this.handleChange })
       );
     }
   }]);
@@ -231,8 +273,8 @@ var SearchBar = (function (_BaseComponent4) {
   return SearchBar;
 })(BaseComponent);
 
-var PlayerSearch = (function (_BaseComponent5) {
-  _inherits(PlayerSearch, _BaseComponent5);
+var PlayerSearch = (function (_BaseComponent6) {
+  _inherits(PlayerSearch, _BaseComponent6);
 
   function PlayerSearch(props) {
     _classCallCheck(this, PlayerSearch);
@@ -241,41 +283,46 @@ var PlayerSearch = (function (_BaseComponent5) {
 
     this.state = {
       filterText: '',
-      inStockOnly: false,
-      data: []
+      data: [],
+      hasData: false
     };
 
-    this._bind('handleUserInput', 'loadPlayers');
+    this._bind('handleUserInput', 'printState');
   }
 
   _createClass(PlayerSearch, [{
-    key: 'loadPlayers',
-    value: function loadPlayers() {
-      _jquery2['default'].ajax({
-        url: '/api/players',
-        dataType: 'json',
-        cache: false,
-        success: (function (data) {
-          this.setState({ data: JSON.parse(data) });
-        }).bind(this),
-        error: (function (xhr, status, err) {
-          console.error('/api/players/', status, err.toString());
-        }).bind(this)
-      });
-    }
-  }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.loadPlayers();
-
-      setInterval(this.loadPlayers, 2000);
+    key: 'printState',
+    value: function printState() {
+      console.log(this.state);
     }
   }, {
     key: 'handleUserInput',
-    value: function handleUserInput(filterText, inStockOnly) {
+    value: function handleUserInput(filterText) {
+      if (filterText.length > 2) {
+        _jquery2['default'].ajax({
+          url: '/api/players/',
+          dataType: 'json',
+          type: 'POST',
+          data: { 'text': filterText },
+          success: (function (data) {
+            this.setState({
+              data: data,
+              hasData: true
+            }, console.log('hey'));
+            console.log('success');
+          }).bind(this),
+          error: (function (xhr, status, err) {
+            console.error('/api/players/', status, err.toString());
+          }).bind(this)
+        });
+      } else if (filterText.length == 0) {
+        this.setState({
+          data: []
+        });
+      }
+
       this.setState({
-        filterText: filterText,
-        inStockOnly: inStockOnly
+        filterText: filterText
       });
     }
   }, {
@@ -286,12 +333,10 @@ var PlayerSearch = (function (_BaseComponent5) {
         null,
         _react2['default'].createElement(SearchBar, {
           filterText: this.state.filterText,
-          inStockOnly: this.state.inStockOnly,
           onUserInput: this.handleUserInput }),
         _react2['default'].createElement(PlayerTable, {
           players: this.state.data,
-          filterText: this.state.filterText,
-          inStockOnly: this.state.inStockOnly })
+          filterText: this.state.filterText })
       );
     }
   }]);
@@ -317,19 +362,7 @@ var _app2 = _interopRequireDefault(_app);
 
 //import '../scss/main.scss';
 
-var products = [{
-  category: 'Sporting Goods',
-  price: '$49.99',
-  stocked: true,
-  name: 'Football'
-}, { category: 'Sporting Goods', price: '$9.99', stocked: true, name: 'Baseball' }, {
-  category: 'Sporting Goods',
-  price: '$29.99',
-  stocked: false,
-  name: 'Basketball'
-}, { category: 'Electronics', price: '$99.99', stocked: true, name: 'iPod Touch' }, { category: 'Electronics', price: '$399.99', stocked: false, name: 'iPhone 5' }, { category: 'Electronics', price: '$199.99', stocked: true, name: 'Nexus 7' }];
-
-_react2['default'].render(_react2['default'].createElement(_app2['default'], { products: products }), document.getElementById('react-app'));
+_react2['default'].render(_react2['default'].createElement(_app2['default'], null), document.getElementById('react-app'));
 
 },{"./app":1,"react":159}],3:[function(require,module,exports){
 // shim for using process in browser

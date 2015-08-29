@@ -129,6 +129,7 @@ INSTALLED_APPS = (
 
     # 'cachalot',
     'webpack_loader',
+    'djangojs',
 
     'fifa.apps.blog',
     'fifa.apps.builder',
