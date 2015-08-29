@@ -1,6 +1,9 @@
+import json
+from django.core import serializers
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http import HttpResponse
 from django.utils.text import slugify
-from django.views.generic import DetailView
+from django.views.generic import DetailView, View
 
 from .players.models import Player, PLAYER_HELPERS, PLAYER_POSITION_LINE_CHOICES
 from .players.forms import PlayersFilterForm
@@ -88,3 +91,10 @@ class ObjectDetailView(DetailView):
         })
 
         return context
+
+
+class PlayerJSONList(View):
+    def get(self, *args, **kwargs):
+        players = serializers.serialize('json', Player.objects.all()[:28])
+
+        return HttpResponse(json.dumps(players))

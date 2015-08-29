@@ -4,6 +4,7 @@ from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
+from fifa.apps.views import PlayerJSONList
 
 admin.autodiscover()
 
@@ -27,6 +28,9 @@ urlpatterns = patterns(
 
     # Players
     url(r'^players/', include('fifa.apps.players.urls', namespace='players')),
+
+    # API
+    url(r'^api/players/$', PlayerJSONList.as_view(), name="api"),
 )
 
 if settings.DEBUG:

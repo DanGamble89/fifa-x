@@ -1,6 +1,17 @@
 import React, { Component, PropTypes } from 'react';
+import $ from 'jquery';
 
 class BaseComponent extends Component {
+  /**
+   * When using React with ES6 we lose the magical this binding of
+   * React.createClass() This creates a method that binds this on all the
+   * functions our class creates
+   * @param methods
+   * @private
+   *
+   * @example
+   * this._bind('function1', 'function2')
+   */
   _bind(...methods) {
     methods.forEach((method) => this[method] = this[method].bind(this));
   }
@@ -18,16 +29,10 @@ class PlayerCategoryRow extends BaseComponent {
 
 class PlayerRow extends BaseComponent {
   render() {
-    const name = this.props.product.stocked ?
-      this.props.product.name :
-      <span style={{color: 'red'}}>
-        {this.props.product.name}
-      </span>;
-
     return (
       <tr>
-        <td>{name}</td>
-        <td>{this.props.product.price}</td>
+        <td>{this.props.player.fields.common_name}</td>
+        <td>{this.props.player.fields.overall_rating}</td>
       </tr>
     );
   }
@@ -35,26 +40,24 @@ class PlayerRow extends BaseComponent {
 
 class PlayerTable extends BaseComponent {
   render() {
-    console.log(this.props);
+//    let rows = [];
+//    let lastCategory = null;
+//
+//    this.props.products.forEach(function(product) {
+//      if (product.name.indexOf(this.props.filterText) === -1 ||
+// (!product.stocked && this.props.inStockOnly)) { return; }  if
+// (product.category !== lastCategory) { rows.push( <PlayerCategoryRow
+// category={product.category} key={product.category}/> ) }
+// rows.push(<PlayerRow product={product} key={product.name}/>);  lastCategory
+// = product.category; }.bind(this));
 
-    let rows = [];
-    let lastCategory = null;
-
-    this.props.products.forEach(function(product) {
-      if (product.name.indexOf(this.props.filterText) === -1 || (!product.stocked && this.props.inStockOnly)) {
-        return;
-      }
-
-      if (product.category !== lastCategory) {
-        rows.push(
-          <PlayerCategoryRow category={product.category} key={product.category}/>
+    if (this.props.players) {
+      var playerRows = this.props.players.map(function (player) {
+        return (
+          <PlayerRow player={player} key={player.pk}/>
         )
-      }
-
-      rows.push(<PlayerRow product={product} key={product.name}/>);
-
-      lastCategory = product.category;
-    }.bind(this));
+      });
+    }
 
     return (
       <table>
@@ -66,7 +69,7 @@ class PlayerTable extends BaseComponent {
         </thead>
 
         <tbody>
-          {rows}
+          {playerRows}
         </tbody>
       </table>
     );
@@ -81,8 +84,9 @@ class SearchBar extends BaseComponent {
   }
 
   handleChange() {
-    console.log(this.refs);
-
+    /**
+     *
+     */
     this.props.onUserInput(
       React.findDOMNode(this.refs.filterTextInput).value,
       React.findDOMNode(this.refs.inStockOnlyInput).checked
@@ -119,10 +123,31 @@ class PlayerSearch extends BaseComponent {
 
     this.state = {
       filterText: '',
-      inStockOnly: false
+      inStockOnly: false,
+      data: []
     };
 
-    this._bind('handleUserInput');
+    this._bind('handleUserInput', 'loadPlayers');
+  }
+
+  loadPlayers() {
+    $.ajax({
+      url: '/api/players',
+      dataType: 'json',
+      cache: false,
+      success: function (data) {
+        this.setState({data: JSON.parse(data)});
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error('/api/players/', status, err.toString());
+      }.bind(this)
+    });
+  }
+
+  componentDidMount() {
+    this.loadPlayers();
+
+    setInterval(this.loadPlayers, 2000);
   }
 
   handleUserInput(filterText, inStockOnly) {
@@ -141,7 +166,7 @@ class PlayerSearch extends BaseComponent {
           onUserInput={this.handleUserInput} />
 
         <PlayerTable
-          products={this.props.products}
+          players={this.state.data}
           filterText={this.state.filterText}
           inStockOnly={this.state.inStockOnly} />
       </div>
