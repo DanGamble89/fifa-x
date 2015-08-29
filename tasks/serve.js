@@ -39,6 +39,7 @@ export default () => {
   // - HTML and Images don't need to be processed
   gulp.watch(config.html.src, reload);
   gulp.watch(config.images.src, reload);
+  gulp.watch(config.js.src, ['scripts']);
 
   // - We don't need a JS watch as that's handled in it's own task (Watchify)
 }

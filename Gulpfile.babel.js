@@ -35,6 +35,9 @@ gulp.task('styles', styles);
 
 // - JS Scripts
 gulp.task('scripts', scripts);
+gulp.task('reloadScripts', ['scripts'], function () {
+  reload();
+});
 
 // - Browser sync
 gulp.task('serve', serve);

@@ -1,49 +1,44 @@
-const staticFolder = 'fifa/static';
-const templateFolder = 'fifa/jinja';
+const srcFolder = './assets';
+const distFolder = './fifa/static';
+const templateFolder = './fifa/jinja';
 
 export default {
   bower: {
-    path: 'bower_components'
+    path: './bower_components'
   },
   css: {
-    path: `${staticFolder}/css`
+    dist: `${distFolder}/css`
   },
   images: {
-    path: `${staticFolder}/images`,
+    dist: `${distFolder}/images`,
     src: [
-      `${staticFolder}/images/**/*`
+      `${srcFolder}/images/**/*`
     ]
   },
   js: {
-    path: `${staticFolder}/js`,
+    dist: `${distFolder}/js`,
     src: [
-      `${staticFolder}/*.js`,
-      `${staticFolder}/**/*.js`
+      `${srcFolder}/*.js`,
+      `${srcFolder}/**/*.js`
     ]
   },
   html: {
     path: templateFolder,
     src: [
-      'fifa/apps/**/*.html',
       `${templateFolder}/*.html`,
       `${templateFolder}/**/*.html`
     ]
   },
   sass: {
-    path: `${staticFolder}/scss`,
     src: [
-      `${staticFolder}/scss/*.scss`,
-      `${staticFolder}/scss/**/*.scss`
+      `${srcFolder}/scss/*.scss`,
+      `${srcFolder}/scss/**/*.scss`
     ]
   },
-  temp: {
-    path: `.tmp`,
-    css: `.tmp/styles`
-  },
   watchify: {
-    fileIn: `${staticFolder}/js/src/main.js`,
-    fileOut: `app.js`,
-    folderIn: `${staticFolder}/js/src`,
-    folderOut: `${staticFolder}/js/build`
+    fileIn: `${srcFolder}/js/main.js`,
+    fileOut: `main.js`,
+    folderIn: `${srcFolder}/js`,
+    folderOut: `${distFolder}/js`
   }
 };

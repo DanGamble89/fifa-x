@@ -22,9 +22,11 @@ const reload = browserSync.reload;
 // - Project config
 import config from './_config';
 
-function compile(watch) {
+function compile() {
   // Create our browserify instance
-  const bundler = watchify(browserify(config.watchify.fileIn, {debug: true}).transform(babelify));
+  const bundler = watchify(browserify(config.watchify.fileIn, {debug: true}).transform(babelify.configure({
+    stage: 0
+  })));
 
   function rebundle() {
     bundler.bundle()
@@ -42,29 +44,18 @@ function compile(watch) {
       .pipe($.sourcemaps.init({loadMaps: true}))
 
       // Write the source maps, need to provide the source for Browser Sync
-      .pipe($.sourcemaps.write({
+      .pipe($.sourcemaps.write('../maps', {
         includeContent: false,
-        sourceRoot: config.watchify.folderIn
+        sourceRoot: '../../../'
       }))
 
       // Place our nice new JS file
-      .pipe(gulp.dest(config.watchify.folderOut));
-  }
+      .pipe(gulp.dest(config.watchify.folderOut))
 
-  if (watch) {
-    bundler.on('update', function () {
-      // Success message
-      console.log('BUNDLED JS! ᕦ(ò_ó)ᕤ');
-
-      // Bundle the JS
-      rebundle();
-
-      // Reload browser
-      reload();
-    });
+      .pipe(reload({stream: true}));
   }
 
   rebundle();
 }
 
-export default () => compile(true);
+export default () => compile();

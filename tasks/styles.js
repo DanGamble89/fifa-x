@@ -18,8 +18,7 @@ import config from './_config';
 export default () => {
   // Browsers we support
   const autoprefixerBrowsers = [
-    'last 2 versions',
-    'ie >= 9'
+    'last 2 versions'
   ];
 
   return gulp.src(config.sass.src)
@@ -32,8 +31,7 @@ export default () => {
     // Process our SCSS to CSS
     .pipe($.sass({
       precision: 10,
-      stats: true,
-      includePaths: ['node_modules/bootstrap-sass/assets/stylesheets']
+      stats: true
     }).on('error', $.sass.logError))
 
     // PostCSS our vendor prefixes
@@ -42,14 +40,8 @@ export default () => {
     // Convert viable px units to REM
     .pipe($.pxtorem())
 
-    // Place our compiled CSS in a tmp folder
-    .pipe(gulp.dest('.tmp'))
-
-    // Minify our CSS in the temp folder
-    .pipe($.if('*.css', $.minifyCss()))
-
     // Write our source map, the root is needed for Django funnyness
-    .pipe($.sourcemaps.write('./', {
+    .pipe($.sourcemaps.write('../maps', {
       includeContent: false,
       sourceRoot: () => {
         return '../../static'
@@ -57,7 +49,7 @@ export default () => {
     }))
 
     // Place our CSS in the location we link to
-    .pipe(gulp.dest(config.css.path))
+    .pipe(gulp.dest(config.css.dist))
 
     // Stream the changes to Browser Sync
     .pipe(browserSync.stream({match: '**/*.css'}))

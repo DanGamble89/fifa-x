@@ -42,8 +42,11 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
+ASSET_URL = '/assets/'
+ASSETFILES_ROOT = os.path.join(BASE_DIR, 'assets')
+
 WEBPACK_LOADER = {
-    'BUNDLE_DIR_NAME': 'bundles/',
+    'BUNDLE_DIR_NAME': 'js/',
     'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
 }
 
