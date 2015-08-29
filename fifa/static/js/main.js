@@ -1,58 +1,275 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var MyComponent = (function (_React$Component) {
-  _inherits(MyComponent, _React$Component);
+var BaseComponent = (function (_Component) {
+  _inherits(BaseComponent, _Component);
 
-  function MyComponent(props) {
-    _classCallCheck(this, MyComponent);
+  function BaseComponent() {
+    _classCallCheck(this, BaseComponent);
 
-    _get(Object.getPrototypeOf(MyComponent.prototype), "constructor", this).call(this, props);
-    this._handleClick = this._handleClick.bind(this);
+    _get(Object.getPrototypeOf(BaseComponent.prototype), 'constructor', this).apply(this, arguments);
   }
 
-  _createClass(MyComponent, [{
-    key: "_handleClick",
-    value: function _handleClick() {
-      console.log(this);
+  _createClass(BaseComponent, [{
+    key: '_bind',
+    value: function _bind() {
+      var _this = this;
+
+      for (var _len = arguments.length, methods = Array(_len), _key = 0; _key < _len; _key++) {
+        methods[_key] = arguments[_key];
+      }
+
+      methods.forEach(function (method) {
+        return _this[method] = _this[method].bind(_this);
+      });
     }
-  }, {
-    key: "render",
-    value: function render() {
-      return _react2["default"].createElement("input", { type: "text", placeholder: "finally?", onClick: this._handleClick });
-    }
-  }], [{
-    key: "defaultProps",
-    value: {
-      autoPlay: false,
-      maxLoops: 10
-    },
-    enumerable: true
   }]);
 
-  return MyComponent;
-})(_react2["default"].Component);
+  return BaseComponent;
+})(_react.Component);
 
-exports["default"] = MyComponent;
-module.exports = exports["default"];
+var PlayerCategoryRow = (function (_BaseComponent) {
+  _inherits(PlayerCategoryRow, _BaseComponent);
+
+  function PlayerCategoryRow() {
+    _classCallCheck(this, PlayerCategoryRow);
+
+    _get(Object.getPrototypeOf(PlayerCategoryRow.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(PlayerCategoryRow, [{
+    key: 'render',
+    value: function render() {
+      return _react2['default'].createElement(
+        'tr',
+        null,
+        _react2['default'].createElement(
+          'th',
+          { colSpan: '2' },
+          this.props.category
+        )
+      );
+    }
+  }]);
+
+  return PlayerCategoryRow;
+})(BaseComponent);
+
+var PlayerRow = (function (_BaseComponent2) {
+  _inherits(PlayerRow, _BaseComponent2);
+
+  function PlayerRow() {
+    _classCallCheck(this, PlayerRow);
+
+    _get(Object.getPrototypeOf(PlayerRow.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(PlayerRow, [{
+    key: 'render',
+    value: function render() {
+      var name = this.props.product.stocked ? this.props.product.name : _react2['default'].createElement(
+        'span',
+        { style: { color: 'red' } },
+        this.props.product.name
+      );
+
+      return _react2['default'].createElement(
+        'tr',
+        null,
+        _react2['default'].createElement(
+          'td',
+          null,
+          name
+        ),
+        _react2['default'].createElement(
+          'td',
+          null,
+          this.props.product.price
+        )
+      );
+    }
+  }]);
+
+  return PlayerRow;
+})(BaseComponent);
+
+var PlayerTable = (function (_BaseComponent3) {
+  _inherits(PlayerTable, _BaseComponent3);
+
+  function PlayerTable() {
+    _classCallCheck(this, PlayerTable);
+
+    _get(Object.getPrototypeOf(PlayerTable.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(PlayerTable, [{
+    key: 'render',
+    value: function render() {
+      console.log(this.props);
+
+      var rows = [];
+      var lastCategory = null;
+
+      this.props.products.forEach((function (product) {
+        if (product.name.indexOf(this.props.filterText) === -1 || !product.stocked && this.props.inStockOnly) {
+          return;
+        }
+
+        if (product.category !== lastCategory) {
+          rows.push(_react2['default'].createElement(PlayerCategoryRow, { category: product.category, key: product.category }));
+        }
+
+        rows.push(_react2['default'].createElement(PlayerRow, { product: product, key: product.name }));
+
+        lastCategory = product.category;
+      }).bind(this));
+
+      return _react2['default'].createElement(
+        'table',
+        null,
+        _react2['default'].createElement(
+          'thead',
+          null,
+          _react2['default'].createElement(
+            'tr',
+            null,
+            _react2['default'].createElement(
+              'th',
+              null,
+              'Name'
+            ),
+            _react2['default'].createElement(
+              'th',
+              null,
+              'Price'
+            )
+          )
+        ),
+        _react2['default'].createElement(
+          'tbody',
+          null,
+          rows
+        )
+      );
+    }
+  }]);
+
+  return PlayerTable;
+})(BaseComponent);
+
+var SearchBar = (function (_BaseComponent4) {
+  _inherits(SearchBar, _BaseComponent4);
+
+  function SearchBar(props) {
+    _classCallCheck(this, SearchBar);
+
+    _get(Object.getPrototypeOf(SearchBar.prototype), 'constructor', this).call(this, props);
+
+    this._bind('handleChange');
+  }
+
+  _createClass(SearchBar, [{
+    key: 'handleChange',
+    value: function handleChange() {
+      console.log(this.refs);
+
+      this.props.onUserInput(_react2['default'].findDOMNode(this.refs.filterTextInput).value, _react2['default'].findDOMNode(this.refs.inStockOnlyInput).checked);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2['default'].createElement(
+        'form',
+        null,
+        _react2['default'].createElement('input', {
+          type: 'text',
+          placeholder: 'Search...',
+          value: this.props.filterText,
+          ref: 'filterTextInput',
+          onChange: this.handleChange }),
+        _react2['default'].createElement(
+          'p',
+          null,
+          _react2['default'].createElement('input', {
+            type: 'checkbox',
+            checked: this.props.inStockOnly,
+            ref: 'inStockOnlyInput',
+            onChange: this.handleChange }),
+          ' ',
+          'Only show products in stock'
+        )
+      );
+    }
+  }]);
+
+  return SearchBar;
+})(BaseComponent);
+
+var PlayerSearch = (function (_BaseComponent5) {
+  _inherits(PlayerSearch, _BaseComponent5);
+
+  function PlayerSearch(props) {
+    _classCallCheck(this, PlayerSearch);
+
+    _get(Object.getPrototypeOf(PlayerSearch.prototype), 'constructor', this).call(this, props);
+
+    this.state = {
+      filterText: '',
+      inStockOnly: false
+    };
+
+    this._bind('handleUserInput');
+  }
+
+  _createClass(PlayerSearch, [{
+    key: 'handleUserInput',
+    value: function handleUserInput(filterText, inStockOnly) {
+      this.setState({
+        filterText: filterText,
+        inStockOnly: inStockOnly
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2['default'].createElement(
+        'div',
+        null,
+        _react2['default'].createElement(SearchBar, {
+          filterText: this.state.filterText,
+          inStockOnly: this.state.inStockOnly,
+          onUserInput: this.handleUserInput }),
+        _react2['default'].createElement(PlayerTable, {
+          products: this.props.products,
+          filterText: this.state.filterText,
+          inStockOnly: this.state.inStockOnly })
+      );
+    }
+  }]);
+
+  return PlayerSearch;
+})(BaseComponent);
+
+exports['default'] = PlayerSearch;
+module.exports = exports['default'];
 
 },{"react":158}],2:[function(require,module,exports){
 'use strict';
@@ -69,7 +286,19 @@ var _app2 = _interopRequireDefault(_app);
 
 //import '../scss/main.scss';
 
-_react2['default'].render(_react2['default'].createElement(_app2['default'], null), document.getElementById('react-app'));
+var products = [{
+  category: 'Sporting Goods',
+  price: '$49.99',
+  stocked: true,
+  name: 'Football'
+}, { category: 'Sporting Goods', price: '$9.99', stocked: true, name: 'Baseball' }, {
+  category: 'Sporting Goods',
+  price: '$29.99',
+  stocked: false,
+  name: 'Basketball'
+}, { category: 'Electronics', price: '$99.99', stocked: true, name: 'iPod Touch' }, { category: 'Electronics', price: '$399.99', stocked: false, name: 'iPhone 5' }, { category: 'Electronics', price: '$199.99', stocked: true, name: 'Nexus 7' }];
+
+_react2['default'].render(_react2['default'].createElement(_app2['default'], { products: products }), document.getElementById('react-app'));
 
 },{"./app":1,"react":158}],3:[function(require,module,exports){
 // shim for using process in browser
