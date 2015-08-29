@@ -1,30 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import $ from 'jquery';
 
-function getCookie(name) {
-  var cookieValue = null;
-  if (document.cookie && document.cookie != '') {
-    var cookies = document.cookie.split(';');
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = $.trim(cookies[i]);
-      // Does this cookie string begin with the name we want?
-      if (cookie.substring(0, name.length + 1) == (name + '=')) {
-        cookieValue = decodeURIComponent(
-          cookie.substring(name.length + 1)
-        );
-        break;
-      }
-    }
-  }
-  return cookieValue;
-}
-
-const csrfToken = getCookie('csrftoken');
-
-function csrfSafeMethod(method) {
-  // HTTP Methods that don't require CSRF protection
-  return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
+import {csrfToken, csrfSafeMethod} from './utils/csrf';
 
 $.ajaxSetup({
   beforeSend: function (xhr, settings) {
@@ -72,9 +49,12 @@ class PlayerCategoryRow extends BaseComponent {
 
 class PlayerRow extends BaseComponent {
   render() {
+    const player = this.props.player;
+    const playerUrl = `/players/${this.props.player.fields.slug}`;
+
     return (
       <tr>
-        <td>{this.props.player.fields.common_name}</td>
+        <td><a href={playerUrl}>{player.fields.common_name}</a></td>
         <td>{this.props.player.fields.overall_rating}</td>
       </tr>
     );
@@ -94,12 +74,16 @@ class PlayerTable extends BaseComponent {
 // rows.push(<PlayerRow product={product} key={product.name}/>);  lastCategory
 // = product.category; }.bind(this));
 
-    if (this.props.players) {
+    console.log(this.props);
+
+    if (this.props.players.length > 0 && this.props.hasData) {
       var playerRows = this.props.players.map(function (player) {
         return (
           <PlayerRow player={player} key={player.pk}/>
         )
       });
+    } else if(this.props.hasData) {
+      var playerRows = (<td colspane="2">There are no players</td>)
     }
 
     return (
@@ -137,7 +121,6 @@ class SearchBar extends BaseComponent {
       <form>
         <CSRFToken />
         <input
-          className={this.props.filterText}
           type="text"
           placeholder="Search..."
           value={this.props.filterText}
@@ -176,8 +159,7 @@ class PlayerSearch extends BaseComponent {
           this.setState({
             data: data,
             hasData: true
-          }, console.log('hey'));
-          console.log('success');
+          });
         }.bind(this),
         error: function (xhr, status, err) {
           console.error('/api/players/', status, err.toString());
@@ -203,7 +185,8 @@ class PlayerSearch extends BaseComponent {
 
         <PlayerTable
           players={this.state.data}
-          filterText={this.state.filterText} />
+          filterText={this.state.filterText}
+          hasData={this.state.hasData} />
       </div>
     )
   }
