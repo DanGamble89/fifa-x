@@ -1,0 +1,161 @@
+/*****************************************************************************/
+/* Player list */
+/*****************************************************************************/
+.playerList {
+  max-width: 400px;
+
+  background-color: #fff;
+  border: 1px solid #d8d8d8;
+}
+
+.playerList_item {
+  display: flex;
+  align-items: center;
+
+  padding: 2px;
+
+  // Order is important here, the 1st shadow only applies to non rare cards
+  &.is-legend { text-shadow: 0 1px 0 rgba(255, 255, 255, .5); }
+  &.is-bronze, &.is-silver, &.is-gold, &.is-totw, &.is-tots { text-shadow: 0 1px 0 rgba(24, 24, 24, .36); }
+
+  &.is-bronze,
+  &.is-silver,
+  &.is-gold,
+  &.is-rare.is-bronze,
+  &.is-rare.is-silver,
+  &.is-rare.is-gold,
+  &.is-totw,
+  &.is-tots,
+  &.is-toty,
+  &.is-motm,
+  &.is-easports,
+  &.is-legend,
+  &.is-green,
+  &.is-pink {
+    content: '';
+  }
+
+  /*****************************************************************************/
+  /* Background colors */
+  /*****************************************************************************/
+  /* ---------------- /
+  Non rare
+  / ---------------- */
+  &.is-bronze { background-color: $EA-Bronze; }
+  &.is-silver { background-color: $EA-Silver; }
+  &.is-gold { background-color: $EA-Gold; }
+
+  /* ---------------- /
+  Rare
+  / ---------------- */
+  &.is-rare {
+    &.is-bronze { background-color: $EA-Bronze; }
+    &.is-silver { background-color: $EA-Silver; }
+    &.is-gold { background-color: $EA-Gold; }
+  }
+
+  /* ---------------- /
+  TOTW
+  / ---------------- */
+  &.is-totw { background-color: $EA-TOTW; }
+
+  /* ---------------- /
+  TOTS
+  / ---------------- */
+  &.is-tots { background-color: $EA-TOTS; }
+
+  /* ---------------- /
+  TOTY
+  / ---------------- */
+  &.is-toty { background-color: $EA-TOTS; }
+
+  /* ---------------- /
+  MOTM
+  / ---------------- */
+  &.is-motm { background-color: $EA-MOTM; }
+
+  /* ---------------- /
+  EA Sports
+  / ---------------- */
+  &.is-easports { background-color: $EA-EASports; }
+
+  /* ---------------- /
+  Legend
+  / ---------------- */
+  &.is-legend { background-color: $EA-LegendLight; }
+
+  /* ---------------- /
+  Purple
+  / ---------------- */
+  //&.is-purple { background-color: 0 -1040px; }
+  /* ---------------- /
+  Green
+  / ---------------- */
+  &.is-green { background-color: $EA-Green; }
+
+  /* ---------------- /
+  Pink
+  / ---------------- */
+  &.is-pink { background-color: $EA-Futties; }
+
+  /***************************************************************************/
+  /* Text colors */
+  /***************************************************************************/
+  /* ---------------- /
+  Dark gold text
+  / ---------------- */
+  &.is-legend { color: #9e7f00; }
+
+  /* ---------------- /
+  Gold text
+  / ---------------- */
+  &.is-totw,
+  &.is-toty,
+  &.is-tots {
+    &.is-bronze { color: #c5a692; }
+    &.is-silver { color: #d6d6d6; }
+    &.is-gold { color: #dfb334; }
+  }
+
+  /* ---------------- /
+  White text
+  / ---------------- */
+  &.is-bronze,
+  &.is-silver,
+  &.is-gold,
+  &.is-toty,
+  &.is-motm,
+  &.is-green,
+  &.is-pink,
+  &.is-purple { color: #fff; }
+
+  /* ---------------- /
+  Salmon text
+  / ---------------- */
+  &.is-easports { color: #c5a692; }
+}
+
+.playerList_img {
+  margin-right: 5px;
+}
+
+.playerList_img-club {
+  margin-top: 3px;
+}
+
+.playerList_rating {
+  display: inline-flex;
+  align-items: center;
+
+  height: 36px;
+  margin-left: auto;
+  padding: 8px;
+
+  background-color: rgba(#000, 0.3);
+  border-radius: 4px;
+  box-shadow: 0 0 3px rgba(#fff, 0.4);
+
+  &:hover {
+    background-color: rgba(inherit, 0.3);
+  }
+}

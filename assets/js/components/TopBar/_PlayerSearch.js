@@ -6,56 +6,57 @@ import $ from 'jquery';
 import { BaseComponent } from '../_base.js';
 import CSRFToken from '../utils/_csrf.js';
 
-class PlayerCategoryRow extends BaseComponent {
-  render() {
-    return (
-      <tr>
-        <th colSpan="2">{this.props.category}</th>
-      </tr>
-    );
-  }
-}
-
-class PlayerRow extends BaseComponent {
+class Player extends BaseComponent {
   render() {
     const player = this.props.player;
-    const playerUrl = `/players/${player.fields.slug}`;
+    const playerUrl = `/players/${player.slug}`;
+    const playerClass = `playerList_item ${player.css_class}`;
 
     return (
-      <tr>
-        <td><a href={playerUrl}>{player.fields.common_name}</a></td>
-        <td>{player.fields.overall_rating}</td>
-      </tr>
+      <li className="list_item">
+        <a className={playerClass} href={playerUrl}>
+          <img
+            className="playerList_img playerList_img-player"
+            alt={player.common_name}
+            src={player.image_medium}
+            height="36"/>
+          <img
+            className="playerList_img playerList_img-club"
+            alt={player.common_name}
+            src={player.club__image_medium}
+            height="24" />
+          <img
+            className="playerList_img playerList_img-nation"
+            alt={player.common_name}
+            src={player.nation__image_medium}
+            width="30" />
+          <span className="playerList_name">{player.common_name}</span>
+          <span className="playerList_rating">{player.overall_rating}</span>
+          </a>
+      </li>
     );
   }
 }
 
-class PlayerTable extends BaseComponent {
+class PlayerList extends BaseComponent {
   render() {
     if (this.props.players.length > 0 && this.props.hasData) {
-      var playerRows = this.props.players.map(function (player) {
+      // If a legit search has been made and a player has been returned
+      var playerNodes = this.props.players.map(function (player) {
         return (
-          <PlayerRow player={player} key={player.pk}/>
+          <Player player={player} key={player.pk}/>
         )
       });
     } else if (this.props.hasData) {
-      var playerRows = (<td colspane="2">There are no players</td>)
+      // If a legit search has been made but the input form has been cleared
+      var playerNodes = (<li>There are no players</li>)
     }
 
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {playerRows}
-        </tbody>
-      </table>
-    );
+      <ul className="playerList [ list ]">
+        {playerNodes}
+      </ul>
+    )
   }
 }
 
@@ -81,13 +82,13 @@ class SearchBar extends BaseComponent {
           placeholder="Search..."
           value={this.props.filterText}
           ref="filterTextInput"
-          onChange={this.handleChange}/>
+          onChange={this.handleChange} />
       </form>
     )
   }
 }
 
-export default class PlayerSearch extends BaseComponent {
+class PlayerSearch extends BaseComponent {
   constructor(props) {
     super(props);
 
@@ -135,7 +136,7 @@ export default class PlayerSearch extends BaseComponent {
           filterText={this.state.filterText}
           onUserInput={this.handleUserInput}/>
 
-        <PlayerTable
+        <PlayerList
           players={this.state.data}
           filterText={this.state.filterText}
           hasData={this.state.hasData}/>
@@ -144,4 +145,4 @@ export default class PlayerSearch extends BaseComponent {
   }
 }
 
-export default React.render(<PlayerSearch />, document.getElementById('react-app'));
+export default React.render(<PlayerSearch />, document.getElementById('PlayerSearch'));

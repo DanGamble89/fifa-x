@@ -241,7 +241,10 @@ class Player(TimeStampedModel, EaModel):
         }
 
         for css_class, color in color_classes.items():
-            if self.color in color:
+            if type(self) is dict:
+                if self.get('color') in color:
+                    card_class += css_class
+            elif self.color in color:
                 card_class += css_class
 
         return card_class.lstrip()

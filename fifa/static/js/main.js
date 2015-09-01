@@ -32,131 +32,100 @@ var _utils_csrfJs = require('../utils/_csrf.js');
 
 var _utils_csrfJs2 = _interopRequireDefault(_utils_csrfJs);
 
-var PlayerCategoryRow = (function (_BaseComponent) {
-  _inherits(PlayerCategoryRow, _BaseComponent);
+var Player = (function (_BaseComponent) {
+  _inherits(Player, _BaseComponent);
 
-  function PlayerCategoryRow() {
-    _classCallCheck(this, PlayerCategoryRow);
+  function Player() {
+    _classCallCheck(this, Player);
 
-    _get(Object.getPrototypeOf(PlayerCategoryRow.prototype), 'constructor', this).apply(this, arguments);
+    _get(Object.getPrototypeOf(Player.prototype), 'constructor', this).apply(this, arguments);
   }
 
-  _createClass(PlayerCategoryRow, [{
-    key: 'render',
-    value: function render() {
-      return _react2['default'].createElement(
-        'tr',
-        null,
-        _react2['default'].createElement(
-          'th',
-          { colSpan: '2' },
-          this.props.category
-        )
-      );
-    }
-  }]);
-
-  return PlayerCategoryRow;
-})(_baseJs.BaseComponent);
-
-var PlayerRow = (function (_BaseComponent2) {
-  _inherits(PlayerRow, _BaseComponent2);
-
-  function PlayerRow() {
-    _classCallCheck(this, PlayerRow);
-
-    _get(Object.getPrototypeOf(PlayerRow.prototype), 'constructor', this).apply(this, arguments);
-  }
-
-  _createClass(PlayerRow, [{
+  _createClass(Player, [{
     key: 'render',
     value: function render() {
       var player = this.props.player;
-      var playerUrl = '/players/' + player.fields.slug;
+      var playerUrl = '/players/' + player.slug;
+      var playerClass = 'playerList_item ' + player.css_class;
 
       return _react2['default'].createElement(
-        'tr',
-        null,
+        'li',
+        { className: 'list_item' },
         _react2['default'].createElement(
-          'td',
-          null,
+          'a',
+          { className: playerClass, href: playerUrl },
+          _react2['default'].createElement('img', {
+            className: 'playerList_img playerList_img-player',
+            alt: player.common_name,
+            src: player.image_medium,
+            height: '36' }),
+          _react2['default'].createElement('img', {
+            className: 'playerList_img playerList_img-club',
+            alt: player.common_name,
+            src: player.club__image_medium,
+            height: '24' }),
+          _react2['default'].createElement('img', {
+            className: 'playerList_img playerList_img-nation',
+            alt: player.common_name,
+            src: player.nation__image_medium,
+            width: '30' }),
           _react2['default'].createElement(
-            'a',
-            { href: playerUrl },
-            player.fields.common_name
+            'span',
+            { className: 'playerList_name' },
+            player.common_name
+          ),
+          _react2['default'].createElement(
+            'span',
+            { className: 'playerList_rating' },
+            player.overall_rating
           )
-        ),
-        _react2['default'].createElement(
-          'td',
-          null,
-          player.fields.overall_rating
         )
       );
     }
   }]);
 
-  return PlayerRow;
+  return Player;
 })(_baseJs.BaseComponent);
 
-var PlayerTable = (function (_BaseComponent3) {
-  _inherits(PlayerTable, _BaseComponent3);
+var PlayerList = (function (_BaseComponent2) {
+  _inherits(PlayerList, _BaseComponent2);
 
-  function PlayerTable() {
-    _classCallCheck(this, PlayerTable);
+  function PlayerList() {
+    _classCallCheck(this, PlayerList);
 
-    _get(Object.getPrototypeOf(PlayerTable.prototype), 'constructor', this).apply(this, arguments);
+    _get(Object.getPrototypeOf(PlayerList.prototype), 'constructor', this).apply(this, arguments);
   }
 
-  _createClass(PlayerTable, [{
+  _createClass(PlayerList, [{
     key: 'render',
     value: function render() {
       if (this.props.players.length > 0 && this.props.hasData) {
-        var playerRows = this.props.players.map(function (player) {
-          return _react2['default'].createElement(PlayerRow, { player: player, key: player.pk });
+        // If a legit search has been made and a player has been returned
+        var playerNodes = this.props.players.map(function (player) {
+          return _react2['default'].createElement(Player, { player: player, key: player.pk });
         });
       } else if (this.props.hasData) {
-        var playerRows = _react2['default'].createElement(
-          'td',
-          { colspane: '2' },
+        // If a legit search has been made but the input form has been cleared
+        var playerNodes = _react2['default'].createElement(
+          'li',
+          null,
           'There are no players'
         );
       }
 
       return _react2['default'].createElement(
-        'table',
-        null,
-        _react2['default'].createElement(
-          'thead',
-          null,
-          _react2['default'].createElement(
-            'tr',
-            null,
-            _react2['default'].createElement(
-              'th',
-              null,
-              'Name'
-            ),
-            _react2['default'].createElement(
-              'th',
-              null,
-              'Price'
-            )
-          )
-        ),
-        _react2['default'].createElement(
-          'tbody',
-          null,
-          playerRows
-        )
+        'ul',
+        { className: 'playerList [ list ]' },
+        playerNodes
       );
     }
   }]);
 
-  return PlayerTable;
+  return PlayerList;
 })(_baseJs.BaseComponent);
 
-var SearchBar = (function (_BaseComponent4) {
-  _inherits(SearchBar, _BaseComponent4);
+var SearchBar = (function (_BaseComponent3) {
+  _inherits(SearchBar, _BaseComponent3);
 
   function SearchBar(props) {
     _classCallCheck(this, SearchBar);
@@ -191,8 +160,8 @@ var SearchBar = (function (_BaseComponent4) {
   return SearchBar;
 })(_baseJs.BaseComponent);
 
-var PlayerSearch = (function (_BaseComponent5) {
-  _inherits(PlayerSearch, _BaseComponent5);
+var PlayerSearch = (function (_BaseComponent4) {
+  _inherits(PlayerSearch, _BaseComponent4);
 
   function PlayerSearch(props) {
     _classCallCheck(this, PlayerSearch);
@@ -246,7 +215,7 @@ var PlayerSearch = (function (_BaseComponent5) {
         _react2['default'].createElement(SearchBar, {
           filterText: this.state.filterText,
           onUserInput: this.handleUserInput }),
-        _react2['default'].createElement(PlayerTable, {
+        _react2['default'].createElement(PlayerList, {
           players: this.state.data,
           filterText: this.state.filterText,
           hasData: this.state.hasData })
@@ -257,8 +226,7 @@ var PlayerSearch = (function (_BaseComponent5) {
   return PlayerSearch;
 })(_baseJs.BaseComponent);
 
-exports['default'] = PlayerSearch;
-exports['default'] = _react2['default'].render(_react2['default'].createElement(PlayerSearch, null), document.getElementById('react-app'));
+exports['default'] = _react2['default'].render(_react2['default'].createElement(PlayerSearch, null), document.getElementById('PlayerSearch'));
 module.exports = exports['default'];
 
 },{"../_base.js":2,"../utils/_csrf.js":3,"jquery":7,"react":162}],2:[function(require,module,exports){

@@ -15,6 +15,7 @@
 @import "helpers/grid";
 @import "helpers/media-queries";
 @import "helpers/mixins";
+@import "helpers/variables";
 
 /*****************************************************************************/
 /* Base */
@@ -30,6 +31,12 @@
 @import "components/header";
 @import "components/lists";
 @import "components/typography";
+
+/* ---------------- /
+Players
+/ ---------------- */
+@import "components/players/player";
+@import "components/players/playerList";
 
 body {
   background-color: yellow;
