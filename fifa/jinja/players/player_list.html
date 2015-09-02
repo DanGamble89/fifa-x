@@ -1,26 +1,51 @@
 {% extends 'base.html' %}
 
 {% block primary_content %}
-  <ul>
-    {% for player in players %}
-      <li>
-        <a href="{{ url('players:player', kwargs={'slug': player.slug}) }}">{{ player }} - {{ current_url }}</a>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Player</th>
+        <th>Club</th>
+        <th>League</th>
+        <th>Nation</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for player in players %}
+        <tr>
+          <td>
+            <div class="ribbon label {{ player.card_class() }}">
+              &nbsp;
+            </div>
 
-        <ul>
-          {# Potentially poor way to do it #}
-          <li>
-            <a href="{{ url('players:list', request=request.GET, get={'nation': player.nation.id}) }}">{{ player.nation }}</a>
-          </li>
-          <li>
-            <a href="{{ url('players:list', request=request.GET, get={'league': player.league.id}) }}">{{ player.league }}</a>
-          </li>
-          <li>
+            <div class="media">
+              <img alt="" src="{{ player.image_medium }}" height="40" width="40">
+
+              <div class="media_content">
+                <a href="{{ url('players:player', kwargs={'slug': player.slug}) }}">{{ player }}</a>
+                <span>
+                  <a href="{{ url('players:list', request=request.GET, get={'nation': player.nation.id}) }}"><img alt="" src="{{ player.nation.image_medium }}" height="20"></a>
+                  <a href="{{ url('players:list', request=request.GET, get={'club': player.club.id}) }}"><img alt="" src="{{ player.club.image_medium }}" height="20"></a>
+                </span>
+              </div>
+            </div>
+          </td>
+
+          <td>
             <a href="{{ url('players:list', request=request.GET, get={'club': player.club.id}) }}">{{ player.club }}</a>
-          </li>
-        </ul>
-      </li>
-    {% endfor %}
-  </ul>
+          </td>
+
+          <td>
+            <a href="{{ url('players:list', request=request.GET, get={'league': player.league.id}) }}">{{ player.league }}</a>
+          </td>
+
+          <td>
+            <a href="{{ url('players:list', request=request.GET, get={'nation': player.nation.id}) }}">{{ player.nation }}</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
   <form action="{{ url('players:list') }}" method="get">
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">

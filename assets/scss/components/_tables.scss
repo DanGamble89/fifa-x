@@ -1,0 +1,35 @@
+/*****************************************************************************/
+/* Table */
+/*****************************************************************************/
+.table {
+  width: 100%;
+
+  background-color: #fff;
+  border: 1px solid rgba(34, 36, 38, .15);
+  border-radius: 4px;
+}
+
+/* ---------------- /
+Table cells
+/ ---------------- */
+.table th,
+.table td {
+  padding: 10px;
+
+  border-bottom: 1px solid rgba(34, 36, 38, .1);
+  border-left: 1px solid rgba(34, 36, 38, .1);
+}
+
+.table th {
+  text-align: left;
+
+  background-color: #f9fafb;
+
+  &:first-child {
+    border-left: 0;
+  }
+}
+
+.table td .ribbon {
+  left: -25px;
+}

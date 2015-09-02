@@ -15,10 +15,21 @@ const reload = browserSync.reload;
 // - Project config
 import config from './_config';
 
+// - PostCSS
+import autoprefixer from 'autoprefixer';
+import quantityQueries from 'postcss-quantity-queries';
+import willChange from 'postcss-will-change';
+
 export default () => {
   // Browsers we support
   const autoprefixerBrowsers = [
     'last 2 versions'
+  ];
+
+  const postCSSProcessors = [
+    quantityQueries,
+    willChange,
+    autoprefixer(autoprefixerBrowsers)
   ];
 
   return gulp.src(config.sass.src)
@@ -35,7 +46,7 @@ export default () => {
     }).on('error', $.sass.logError))
 
     // PostCSS our vendor prefixes
-    .pipe($.autoprefixer(autoprefixerBrowsers))
+    .pipe($.postcss(postCSSProcessors))
 
     // Convert viable px units to REM
     .pipe($.pxtorem())

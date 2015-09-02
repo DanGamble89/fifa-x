@@ -29,7 +29,10 @@
 /*****************************************************************************/
 @import "components/cards";
 @import "components/forms";
+@import "components/labels";
 @import "components/lists";
+@import "components/ribbons";
+@import "components/tables";
 
 /* ---------------- /
 Players
@@ -49,5 +52,37 @@ Players
     width: 100%;
     background-color: rgba(0, 0, 0, .03);
     border-top: 1px solid rgba(34, 36, 38, .15);
+  }
+}
+
+.media {
+  display: inline-flex;
+  align-items: center;
+
+  height: 40px;
+  vertical-align: middle;
+
+  img {
+    margin-right: 5px;
+  }
+
+  .media_content {
+    display: flex;
+    flex-direction: column;
+
+    a {
+      line-height: 20px;
+      font-weight: 700;
+
+      color: rgba(0, 0, 0, .87);
+    }
+
+    span {
+      height: 20px;
+
+      a {
+        display: inline-flex;
+      }
+    }
   }
 }
