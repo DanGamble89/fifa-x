@@ -80,25 +80,29 @@
   </ul>
 
   <ul>
-    <li>
-      Traits:
+    {% if player.traits %}
+      <li>
+        Traits:
 
-      <ul>
-        {% for trait in player.traits %}
-          <li>{{ trait }}</li>
-        {% endfor %}
-      </ul>
-    </li>
+        <ul>
+          {% for trait in player.traits %}
+            <li>{{ trait }}</li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% endif %}
 
-    <li>
-      Specialities:
+    {% if player.specialities %}
+      <li>
+        Specialities:
 
-      <ul>
-        {% for speciality in player.specialities %}
-          <li>{{ speciality }}</li>
-        {% endfor %}
-      </ul>
-    </li>
+        <ul>
+          {% for speciality in player.specialities %}
+            <li>{{ speciality }}</li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% endif %}
   </ul>
 
 {% endblock %}

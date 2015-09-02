@@ -7,20 +7,19 @@
     <meta name="description" content="{% block meta_description %}{% endblock meta_description %}">
     <meta name="robots" content="{% block meta_robots %}{% endblock meta_robots %}">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-{#    <link href="{{ static('css/main.css') }}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{{ static('css/main.css') }}" rel="stylesheet" type="text/css">#}
 
     <title>{% block title %}{% endblock title %}</title>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
 
-    {# Roboto font import #}
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700italic,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
 
     {# Font Awesome #}
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
 
-{#    {{ render_bundle('main', 'css')|safe }}#}
+    {#    {{ render_bundle('main', 'css')|safe }}#}
     <link href="{{ static('css/main.css') }}" rel="stylesheet" type="text/css">
 
     {% block extra_styles %}{% endblock %}
@@ -30,54 +29,50 @@
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-{#    <script>#}
-{#      (function (d) {#}
-{#        var config = {#}
-{#              kitId: 'uid8ndh',#}
-{#              scriptTimeout: 3000,#}
-{#              async: true#}
-{#            },#}
-{#            h = d.documentElement, t = setTimeout(function () {h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive";}, config.scriptTimeout), tk = d.createElement("script"), f = false, s = d.getElementsByTagName("script")[0], a;#}
-{#        h.className += " wf-loading";#}
-{#        tk.src = '//use.typekit.net/' + config.kitId + '.js';#}
-{#        tk.async = true;#}
-{#        tk.onload = tk.onreadystatechange = function () {#}
-{#          a = this.readyState;#}
-{#          if (f || a && a != "complete" && a != "loaded")return;#}
-{#          f = true;#}
-{#          clearTimeout(t);#}
-{#          try {Typekit.load(config)} catch (e) {}#}
-{#        };#}
-{#        s.parentNode.insertBefore(tk, s)#}
-{#      })(document);#}
-{#    </script>#}
+    {#    <script>#}
+    {#      (function (d) {#}
+    {#        var config = {#}
+    {#              kitId: 'uid8ndh',#}
+    {#              scriptTimeout: 3000,#}
+    {#              async: true#}
+    {#            },#}
+    {#            h = d.documentElement, t = setTimeout(function () {h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive";}, config.scriptTimeout), tk = d.createElement("script"), f = false, s = d.getElementsByTagName("script")[0], a;#}
+    {#        h.className += " wf-loading";#}
+    {#        tk.src = '//use.typekit.net/' + config.kitId + '.js';#}
+    {#        tk.async = true;#}
+    {#        tk.onload = tk.onreadystatechange = function () {#}
+    {#          a = this.readyState;#}
+    {#          if (f || a && a != "complete" && a != "loaded")return;#}
+    {#          f = true;#}
+    {#          clearTimeout(t);#}
+    {#          try {Typekit.load(config)} catch (e) {}#}
+    {#        };#}
+    {#        s.parentNode.insertBefore(tk, s)#}
+    {#      })(document);#}
+    {#    </script>#}
 
   </head>
 
   <body class="{% block body_class %}{% endblock body_class %}">
     <header class="headerStrip">
       <div class="container">
-        <nav class="headerStrip_nav from-left">
-          <ul class="[ list list-nav list-inline ]">
-            <li class="list_item"><a href="{{ url('players:list') }}">Players</a></li>
-            <li class="list_item"><a href="{{ url('clubs:list') }}">Clubs</a></li>
-            <li class="list_item"><a href="{{ url('leagues:list') }}">Leagues</a></li>
-            <li class="list_item"><a href="{{ url('nations:list') }}">Nations</a></li>
-            <li class="list_item"><a href="{{ url('nations:list') }}">Squads</a></li>
-          </ul>
-        </nav>
+        <div class="menu">
+          <a class="menu_item is-header" href="#">FUTMoz</a>
+          <div class="menu_item">
+            <div class="input is-naked has-icon">
+              <input type="text" placeholder="Search...">
+              <i class="icon [ fa fa-search ]"></i>
+            </div>
+          </div>
+          <a class="menu_item" href="{{ url('players:list') }}">Players</a>
+          <a class="menu_item" href="{{ url('clubs:list') }}">Clubs</a>
+          <a class="menu_item" href="{{ url('leagues:list') }}">Leagues</a>
+          <a class="menu_item" href="{{ url('nations:list') }}">Nations</a>
+          <a class="menu_item" href="{{ url('nations:list') }}">Squads</a>
 
-        <a href="/" class="logo headerStrip_logo"></a>
-
-        <nav class="headerStrip_nav from-right">
-          <ul class="[ list list-nav list-inline is-reversed ]">
-            <li class="list_item"><a href="{{ url('players:list') }}">Players</a></li>
-            <li class="list_item"><a href="{{ url('clubs:list') }}">Clubs</a></li>
-            <li class="list_item"><a href="{{ url('leagues:list') }}">Leagues</a></li>
-            <li class="list_item"><a href="{{ url('nations:list') }}">Nations</a></li>
-            <li class="list_item"><a href="{{ url('nations:list') }}">Squads</a></li>
-          </ul>
-        </nav>
+          <a href="#" class="menu_item menu_right"><i class="icon [ fa fa-key ]"></i> Log in</a>
+          <a href="#" class="menu_item"><i class="icon fa fa-user"></i> User</a>
+        </div>
       </div>
     </header>
 
@@ -106,7 +101,7 @@
     <div id="PlayerSearch"></div>
 
     <script src="{{ static('js/main.js') }}"></script>
-{#    {{ render_bundle('main', 'js')|safe }}#}
+    {#    {{ render_bundle('main', 'js')|safe }}#}
 
     {% block end_js %}{% endblock %}
   </body>

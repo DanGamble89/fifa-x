@@ -1,0 +1,67 @@
+/*****************************************************************************/
+/* Menu */
+/*****************************************************************************/
+.menu {
+  position: relative;
+
+  display: flex;
+
+  background-color: #fff;
+  border: 1px solid rgba(34, 36, 38, .15);
+  border-radius: 4px;
+  box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15);
+}
+
+/* ---------------- /
+Menu item
+/ ---------------- */
+.menu_item {
+  position: relative;
+
+  flex: 0 0 auto;
+
+  padding: 13px 16px;
+
+  line-height: 20px;
+
+  color: rgba(0, 0, 0, .87);
+
+  &:before {
+    content: '';
+
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    height: 100%;
+    width: 1px;
+
+    background-color: rgba(34, 36, 38, .1);
+  }
+
+  &.is-header {
+    font-weight: 700;
+  }
+}
+
+/* ---------------- /
+Inputs
+/ ---------------- */
+.menu_item input {
+  height: 20px;
+
+  line-height: 20px;
+}
+
+/* ---------------- /
+Right
+/ ---------------- */
+.menu_right {
+  margin-left: auto;
+
+  &:before,
+  ~ .menu_item:before {
+    right: auto;
+    left: 0;
+  }
+}

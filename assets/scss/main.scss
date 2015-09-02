@@ -21,16 +21,15 @@
 /* Base */
 /*****************************************************************************/
 @import "base/layout";
+@import "base/menu";
+@import "base/type";
 
 /*****************************************************************************/
 /* Components */
 /*****************************************************************************/
 @import "components/cards";
-@import "components/control-strip";
-@import "components/filters";
-@import "components/header";
+@import "components/forms";
 @import "components/lists";
-@import "components/typography";
 
 /* ---------------- /
 Players
@@ -38,6 +37,17 @@ Players
 @import "components/players/player";
 @import "components/players/playerList";
 
-body {
-  background-color: yellow;
+.is-stacked {
+  padding-bottom: 3px;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    height: 6px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .03);
+    border-top: 1px solid rgba(34, 36, 38, .15);
+  }
 }

@@ -5,31 +5,3 @@ html,
 body {
   height: 100%;
 }
-
-body {
-  position: relative;
-
-  background-color: #fff;
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: -1;
-
-    display: block;
-    height: 380px;
-
-    background-color: #000;
-    background-image: url('/static/img/test.png');
-    background-position: bottom;
-    background-repeat: repeat-x;
-  }
-}
-
-.mainContent {
-  margin: 0 auto;
-  max-width: 1170px;
-}

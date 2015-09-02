@@ -1,0 +1,42 @@
+/*****************************************************************************/
+/* Form */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/* Inputs */
+/*****************************************************************************/
+input {
+  padding: 0;
+
+  border: 1px solid rgba(34, 36, 38, .15);
+  color: rgba(0, 0, 0, .87);
+}
+
+/* ---------------- /
+Naked field
+/ ---------------- */
+.input.is-naked input {
+  border-color: transparent;
+}
+
+/* ---------------- /
+Icon fields
+/ ---------------- */
+.input.has-icon {
+  display: flex;
+  align-items: center;
+}
+
+.input.has-icon .icon {
+  opacity: 0.5;
+
+  transition: 0.3s opacity ease;
+}
+
+.input.has-icon input:focus {
+  outline: none;
+
+  + .icon {
+    opacity: 1;
+  }
+}
