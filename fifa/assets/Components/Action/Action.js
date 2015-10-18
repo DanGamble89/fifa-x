@@ -1,6 +1,3 @@
-import template from './Action.html';
-import './Action.scss';
-
 export default {
   props: ['link'],
 

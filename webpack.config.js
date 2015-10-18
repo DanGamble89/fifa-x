@@ -5,13 +5,26 @@ var production = process.env.NODE_ENV === 'production';
 var CleanPlugin = require('clean-webpack-plugin');
 var ExtractPlugin = require('extract-text-webpack-plugin');
 
+var at2x = require('postcss-at2x');
+var autoPrefixer = require('autoprefixer');
+var enter = require('postcss-pseudo-class-enter');
+var fakeId = require('postcss-fakeid');
+var flexbugFixes = require('postcss-flexbugs-fixes');
+var propertyLookup = require('postcss-property-lookup');
+var pxToRem = require('postcss-pxtorem');
+var willChange = require('postcss-will-change');
+
 var plugins = [
   // This plugins optimizes chunks and modules by
   // how much they are used in your app
   new webpack.optimize.OccurenceOrderPlugin(),
   new ExtractPlugin(production ? '[name]-[hash].css' : 'bundle.css'),
   new webpack.HotModuleReplacementPlugin(),
-  new webpack.NoErrorsPlugin()
+  new webpack.NoErrorsPlugin(),
+  new webpack.ProvidePlugin({
+    _:   'lodash',
+    Vue: 'vue'
+  })
 ];
 
 if (production) {
@@ -69,16 +82,22 @@ module.exports = {
   },
 
   module: {
+    preLoaders: [
+      {
+        test: /\.js/,
+        loader: 'eslint'
+      }
+    ],
     loaders: [
       {
         test: /\.js/,
         exclude: /node_modules/,
-        loader: 'babel',
+        loaders: ['babel', 'baggage?[file].html=template&[file].scss'],
         include: __dirname + '/fifa/assets'
       },
       {
         test: /\.scss/,
-        loader: ExtractPlugin.extract('style', 'css!sass')
+        loader: ExtractPlugin.extract('style', 'css!postcss!sass')
       },
       {
         test: /\.html/,
@@ -96,6 +115,24 @@ module.exports = {
 
   plugins: plugins,
 
+  postcss: function () {
+    return [
+      at2x,
+      enter,
+      fakeId,
+      propertyLookup,
+      pxToRem,
+      willChange,
+
+      // Autoprefixer always 2nd last as the other plugins might add code that
+      // needs to be prefixed
+      autoPrefixer,
+
+      // Flexbugs always last as it might need to do something the browser
+      // prefixed declarations
+      flexbugFixes
+    ];
+  },
 
   resolve: {
     modulesDirectors: ['node_modules']
